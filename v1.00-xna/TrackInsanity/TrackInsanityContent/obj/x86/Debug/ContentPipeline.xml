@@ -1,0 +1,613 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<XnaContent xmlns:Pipeline="Microsoft.Xna.Framework.Content.Pipeline">
+  <Asset Type="Pipeline:BuildItemCollection">
+    <Item>
+      <Source>board\activePlayerBG1.png</Source>
+      <Name>board\activePlayerBG1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Damaniel\Documents\Visual Studio 2010\Projects\TrackInsanity\TrackInsanity\TrackInsanity\bin\x86\Debug\Content\board\activePlayerBG1.xnb</Output>
+      <Time>2010-04-04T15:54:55.2139405-07:00</Time>
+    </Item>
+    <Item>
+      <Source>board\activePlayerStations.png</Source>
+      <Name>board\activePlayerStations</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Damaniel\Documents\Visual Studio 2010\Projects\TrackInsanity\TrackInsanity\TrackInsanity\bin\x86\Debug\Content\board\activePlayerStations.xnb</Output>
+      <Time>2010-03-27T00:17:37.4701915-07:00</Time>
+    </Item>
+    <Item>
+      <Source>board\activePlayerStationStatus.png</Source>
+      <Name>board\activePlayerStationStatus</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Damaniel\Documents\Visual Studio 2010\Projects\TrackInsanity\TrackInsanity\TrackInsanity\bin\x86\Debug\Content\board\activePlayerStationStatus.xnb</Output>
+      <Time>2010-03-27T00:17:37.3781863-07:00</Time>
+    </Item>
+    <Item>
+      <Source>board\activePlayerTileBack.png</Source>
+      <Name>board\activePlayerTileBack</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Damaniel\Documents\Visual Studio 2010\Projects\TrackInsanity\TrackInsanity\TrackInsanity\bin\x86\Debug\Content\board\activePlayerTileBack.xnb</Output>
+      <Time>2010-03-27T00:17:37.4341895-07:00</Time>
+    </Item>
+    <Item>
+      <Source>board\boardBG.png</Source>
+      <Name>board\boardBG</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Damaniel\Documents\Visual Studio 2010\Projects\TrackInsanity\TrackInsanity\TrackInsanity\bin\x86\Debug\Content\board\boardBG.xnb</Output>
+      <Time>2010-04-04T22:50:49.4572415-07:00</Time>
+    </Item>
+    <Item>
+      <Source>board\cancelButton.png</Source>
+      <Name>board\cancelButton</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Damaniel\Documents\Visual Studio 2010\Projects\TrackInsanity\TrackInsanity\TrackInsanity\bin\x86\Debug\Content\board\cancelButton.xnb</Output>
+      <Time>2010-03-27T00:17:37.4741917-07:00</Time>
+    </Item>
+    <Item>
+      <Source>board\chooseDiscard.png</Source>
+      <Name>board\chooseDiscard</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Damaniel\Documents\Visual Studio 2010\Projects\TrackInsanity\TrackInsanity\TrackInsanity\bin\x86\Debug\Content\board\chooseDiscard.xnb</Output>
+      <Time>2010-03-27T00:17:37.4661913-07:00</Time>
+    </Item>
+    <Item>
+      <Source>board\confirmExit.png</Source>
+      <Name>board\confirmExit</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Damaniel\Documents\Visual Studio 2010\Projects\TrackInsanity\TrackInsanity\TrackInsanity\bin\x86\Debug\Content\board\confirmExit.xnb</Output>
+      <Time>2010-03-27T00:17:37.4301892-07:00</Time>
+    </Item>
+    <Item>
+      <Source>board\cpuThinking.png</Source>
+      <Name>board\cpuThinking</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Damaniel\Documents\Visual Studio 2010\Projects\TrackInsanity\TrackInsanity\TrackInsanity\bin\x86\Debug\Content\board\cpuThinking.xnb</Output>
+      <Time>2010-03-27T00:17:37.4851924-07:00</Time>
+    </Item>
+    <Item>
+      <Source>board\currentPlayer.png</Source>
+      <Name>board\currentPlayer</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Damaniel\Documents\Visual Studio 2010\Projects\TrackInsanity\TrackInsanity\TrackInsanity\bin\x86\Debug\Content\board\currentPlayer.xnb</Output>
+      <Time>2010-03-27T00:17:37.3821865-07:00</Time>
+    </Item>
+    <Item>
+      <Source>board\currentTile.png</Source>
+      <Name>board\currentTile</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Damaniel\Documents\Visual Studio 2010\Projects\TrackInsanity\TrackInsanity\TrackInsanity\bin\x86\Debug\Content\board\currentTile.xnb</Output>
+      <Time>2010-03-27T00:17:37.4451901-07:00</Time>
+    </Item>
+    <Item>
+      <Source>board\darkenMask.png</Source>
+      <Name>board\darkenMask</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Damaniel\Documents\Visual Studio 2010\Projects\TrackInsanity\TrackInsanity\TrackInsanity\bin\x86\Debug\Content\board\darkenMask.xnb</Output>
+      <Time>2010-03-27T00:17:37.4191886-07:00</Time>
+    </Item>
+    <Item>
+      <Source>board\digits.png</Source>
+      <Name>board\digits</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Damaniel\Documents\Visual Studio 2010\Projects\TrackInsanity\TrackInsanity\TrackInsanity\bin\x86\Debug\Content\board\digits.xnb</Output>
+      <Time>2010-03-27T00:17:37.426189-07:00</Time>
+    </Item>
+    <Item>
+      <Source>board\drawTileHighlight80.png</Source>
+      <Name>board\drawTileHighlight80</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Damaniel\Documents\Visual Studio 2010\Projects\TrackInsanity\TrackInsanity\TrackInsanity\bin\x86\Debug\Content\board\drawTileHighlight80.xnb</Output>
+      <Time>2010-03-27T00:17:37.4111881-07:00</Time>
+    </Item>
+    <Item>
+      <Source>board\gameFinished.png</Source>
+      <Name>board\gameFinished</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Damaniel\Documents\Visual Studio 2010\Projects\TrackInsanity\TrackInsanity\TrackInsanity\bin\x86\Debug\Content\board\gameFinished.xnb</Output>
+      <Time>2010-04-04T15:45:17.6969084-07:00</Time>
+    </Item>
+    <Item>
+      <Source>board\lastMoveHighlights.png</Source>
+      <Name>board\lastMoveHighlights</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Damaniel\Documents\Visual Studio 2010\Projects\TrackInsanity\TrackInsanity\TrackInsanity\bin\x86\Debug\Content\board\lastMoveHighlights.xnb</Output>
+      <Time>2010-03-27T00:17:37.3931871-07:00</Time>
+    </Item>
+    <Item>
+      <Source>board\playerColorTabs.png</Source>
+      <Name>board\playerColorTabs</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Damaniel\Documents\Visual Studio 2010\Projects\TrackInsanity\TrackInsanity\TrackInsanity\bin\x86\Debug\Content\board\playerColorTabs.xnb</Output>
+      <Time>2010-03-27T00:17:37.4621911-07:00</Time>
+    </Item>
+    <Item>
+      <Source>board\playerHumanComputer.png</Source>
+      <Name>board\playerHumanComputer</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Damaniel\Documents\Visual Studio 2010\Projects\TrackInsanity\TrackInsanity\TrackInsanity\bin\x86\Debug\Content\board\playerHumanComputer.xnb</Output>
+      <Time>2010-03-27T00:17:37.4571908-07:00</Time>
+    </Item>
+    <Item>
+      <Source>board\playerNumberText.png</Source>
+      <Name>board\playerNumberText</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Damaniel\Documents\Visual Studio 2010\Projects\TrackInsanity\TrackInsanity\TrackInsanity\bin\x86\Debug\Content\board\playerNumberText.xnb</Output>
+      <Time>2010-03-27T00:17:37.4041877-07:00</Time>
+    </Item>
+    <Item>
+      <Source>board\playerScoreText.png</Source>
+      <Name>board\playerScoreText</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Damaniel\Documents\Visual Studio 2010\Projects\TrackInsanity\TrackInsanity\TrackInsanity\bin\x86\Debug\Content\board\playerScoreText.xnb</Output>
+      <Time>2010-03-27T00:17:37.4411899-07:00</Time>
+    </Item>
+    <Item>
+      <Source>board\selectAction.png</Source>
+      <Name>board\selectAction</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Damaniel\Documents\Visual Studio 2010\Projects\TrackInsanity\TrackInsanity\TrackInsanity\bin\x86\Debug\Content\board\selectAction.xnb</Output>
+      <Time>2010-03-27T00:17:37.4141883-07:00</Time>
+    </Item>
+    <Item>
+      <Source>board\selectActionDiscard.png</Source>
+      <Name>board\selectActionDiscard</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Damaniel\Documents\Visual Studio 2010\Projects\TrackInsanity\TrackInsanity\TrackInsanity\bin\x86\Debug\Content\board\selectActionDiscard.xnb</Output>
+      <Time>2010-03-27T00:17:37.3971873-07:00</Time>
+    </Item>
+    <Item>
+      <Source>board\selectActionDrawTile.png</Source>
+      <Name>board\selectActionDrawTile</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Damaniel\Documents\Visual Studio 2010\Projects\TrackInsanity\TrackInsanity\TrackInsanity\bin\x86\Debug\Content\board\selectActionDrawTile.xnb</Output>
+      <Time>2010-03-27T00:17:37.4001875-07:00</Time>
+    </Item>
+    <Item>
+      <Source>board\selectActionPass.png</Source>
+      <Name>board\selectActionPass</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Damaniel\Documents\Visual Studio 2010\Projects\TrackInsanity\TrackInsanity\TrackInsanity\bin\x86\Debug\Content\board\selectActionPass.xnb</Output>
+      <Time>2010-03-27T00:17:37.3901869-07:00</Time>
+    </Item>
+    <Item>
+      <Source>board\selectActionPlayTile.png</Source>
+      <Name>board\selectActionPlayTile</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Damaniel\Documents\Visual Studio 2010\Projects\TrackInsanity\TrackInsanity\TrackInsanity\bin\x86\Debug\Content\board\selectActionPlayTile.xnb</Output>
+      <Time>2010-03-27T00:17:37.4221888-07:00</Time>
+    </Item>
+    <Item>
+      <Source>board\selectTile.png</Source>
+      <Name>board\selectTile</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Damaniel\Documents\Visual Studio 2010\Projects\TrackInsanity\TrackInsanity\TrackInsanity\bin\x86\Debug\Content\board\selectTile.xnb</Output>
+      <Time>2010-03-27T00:17:37.374186-07:00</Time>
+    </Item>
+    <Item>
+      <Source>board\stations.png</Source>
+      <Name>board\stations</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Damaniel\Documents\Visual Studio 2010\Projects\TrackInsanity\TrackInsanity\TrackInsanity\bin\x86\Debug\Content\board\stations.xnb</Output>
+      <Time>2010-04-05T00:14:34.4346538-07:00</Time>
+    </Item>
+    <Item>
+      <Source>board\tileStrip40.png</Source>
+      <Name>board\tileStrip40</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Damaniel\Documents\Visual Studio 2010\Projects\TrackInsanity\TrackInsanity\TrackInsanity\bin\x86\Debug\Content\board\tileStrip40.xnb</Output>
+      <Time>2010-03-27T00:17:37.4891926-07:00</Time>
+    </Item>
+    <Item>
+      <Source>board\tileStrip64.png</Source>
+      <Name>board\tileStrip64</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Damaniel\Documents\Visual Studio 2010\Projects\TrackInsanity\TrackInsanity\TrackInsanity\bin\x86\Debug\Content\board\tileStrip64.xnb</Output>
+      <Time>2010-03-27T00:17:37.4931928-07:00</Time>
+    </Item>
+    <Item>
+      <Source>board\trackOverlays.png</Source>
+      <Name>board\trackOverlays</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Damaniel\Documents\Visual Studio 2010\Projects\TrackInsanity\TrackInsanity\TrackInsanity\bin\x86\Debug\Content\board\trackOverlays.xnb</Output>
+      <Time>2010-03-27T00:17:37.4381897-07:00</Time>
+    </Item>
+    <Item>
+      <Source>board\trains.png</Source>
+      <Name>board\trains</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Damaniel\Documents\Visual Studio 2010\Projects\TrackInsanity\TrackInsanity\TrackInsanity\bin\x86\Debug\Content\board\trains.xnb</Output>
+      <Time>2010-03-27T00:17:37.4531905-07:00</Time>
+    </Item>
+    <Item>
+      <Source>board\validMask.png</Source>
+      <Name>board\validMask</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Damaniel\Documents\Visual Studio 2010\Projects\TrackInsanity\TrackInsanity\TrackInsanity\bin\x86\Debug\Content\board\validMask.xnb</Output>
+      <Time>2010-03-27T00:17:37.4071879-07:00</Time>
+    </Item>
+    <Item>
+      <Source>board\tileBackLarge.png</Source>
+      <Name>board\tileBackLarge</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Damaniel\Documents\Visual Studio 2010\Projects\TrackInsanity\TrackInsanity\TrackInsanity\bin\x86\Debug\Content\board\tileBackLarge.xnb</Output>
+      <Time>2010-03-29T17:32:43.9000708-07:00</Time>
+    </Item>
+    <Item>
+      <Source>newGame\humanCPUHighlighted.png</Source>
+      <Name>newGame\humanCPUHighlighted</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Damaniel\Documents\Visual Studio 2010\Projects\TrackInsanity\TrackInsanity\TrackInsanity\bin\x86\Debug\Content\newGame\humanCPUHighlighted.xnb</Output>
+      <Time>2010-03-27T00:17:37.0401669-07:00</Time>
+    </Item>
+    <Item>
+      <Source>newGame\newGameMenu.png</Source>
+      <Name>newGame\newGameMenu</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Damaniel\Documents\Visual Studio 2010\Projects\TrackInsanity\TrackInsanity\TrackInsanity\bin\x86\Debug\Content\newGame\newGameMenu.xnb</Output>
+      <Time>2010-04-04T16:01:48.5035793-07:00</Time>
+    </Item>
+    <Item>
+      <Source>newGame\numPlayersHighlighted.png</Source>
+      <Name>newGame\numPlayersHighlighted</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Damaniel\Documents\Visual Studio 2010\Projects\TrackInsanity\TrackInsanity\TrackInsanity\bin\x86\Debug\Content\newGame\numPlayersHighlighted.xnb</Output>
+      <Time>2010-03-27T00:17:37.0361667-07:00</Time>
+    </Item>
+    <Item>
+      <Source>options\aiLevelHighlighted.png</Source>
+      <Name>options\aiLevelHighlighted</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Damaniel\Documents\Visual Studio 2010\Projects\TrackInsanity\TrackInsanity\TrackInsanity\bin\x86\Debug\Content\options\aiLevelHighlighted.xnb</Output>
+      <Time>2010-03-27T00:17:37.7372068-07:00</Time>
+    </Item>
+    <Item>
+      <Source>options\digitsHighlighted.png</Source>
+      <Name>options\digitsHighlighted</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Damaniel\Documents\Visual Studio 2010\Projects\TrackInsanity\TrackInsanity\TrackInsanity\bin\x86\Debug\Content\options\digitsHighlighted.xnb</Output>
+      <Time>2010-03-27T00:17:37.741207-07:00</Time>
+    </Item>
+    <Item>
+      <Source>options\optionScreen.png</Source>
+      <Name>options\optionScreen</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Damaniel\Documents\Visual Studio 2010\Projects\TrackInsanity\TrackInsanity\TrackInsanity\bin\x86\Debug\Content\options\optionScreen.xnb</Output>
+      <Time>2010-03-31T23:38:44.8026037-07:00</Time>
+    </Item>
+    <Item>
+      <Source>options\showLastMoveHighlighted.png</Source>
+      <Name>options\showLastMoveHighlighted</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Damaniel\Documents\Visual Studio 2010\Projects\TrackInsanity\TrackInsanity\TrackInsanity\bin\x86\Debug\Content\options\showLastMoveHighlighted.xnb</Output>
+      <Time>2010-03-27T00:17:37.7302064-07:00</Time>
+    </Item>
+    <Item>
+      <Source>options\yesNoHighlighted.png</Source>
+      <Name>options\yesNoHighlighted</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Damaniel\Documents\Visual Studio 2010\Projects\TrackInsanity\TrackInsanity\TrackInsanity\bin\x86\Debug\Content\options\yesNoHighlighted.xnb</Output>
+      <Time>2010-03-27T00:17:37.7332066-07:00</Time>
+    </Item>
+    <Item>
+      <Source>results\digitsLarge.png</Source>
+      <Name>results\digitsLarge</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Damaniel\Documents\Visual Studio 2010\Projects\TrackInsanity\TrackInsanity\TrackInsanity\bin\x86\Debug\Content\results\digitsLarge.xnb</Output>
+      <Time>2010-03-27T00:17:36.8951586-07:00</Time>
+    </Item>
+    <Item>
+      <Source>results\digitsSmall.png</Source>
+      <Name>results\digitsSmall</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Damaniel\Documents\Visual Studio 2010\Projects\TrackInsanity\TrackInsanity\TrackInsanity\bin\x86\Debug\Content\results\digitsSmall.xnb</Output>
+      <Time>2010-03-27T00:17:36.8921585-07:00</Time>
+    </Item>
+    <Item>
+      <Source>results\playersLarge.png</Source>
+      <Name>results\playersLarge</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Damaniel\Documents\Visual Studio 2010\Projects\TrackInsanity\TrackInsanity\TrackInsanity\bin\x86\Debug\Content\results\playersLarge.xnb</Output>
+      <Time>2010-03-27T00:17:36.9071593-07:00</Time>
+    </Item>
+    <Item>
+      <Source>results\playersSmall.png</Source>
+      <Name>results\playersSmall</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Damaniel\Documents\Visual Studio 2010\Projects\TrackInsanity\TrackInsanity\TrackInsanity\bin\x86\Debug\Content\results\playersSmall.xnb</Output>
+      <Time>2010-03-27T00:17:36.9041591-07:00</Time>
+    </Item>
+    <Item>
+      <Source>results\resultsScreen.png</Source>
+      <Name>results\resultsScreen</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Damaniel\Documents\Visual Studio 2010\Projects\TrackInsanity\TrackInsanity\TrackInsanity\bin\x86\Debug\Content\results\resultsScreen.xnb</Output>
+      <Time>2010-04-04T02:49:36.0455638-07:00</Time>
+    </Item>
+    <Item>
+      <Source>title\holygoat.png</Source>
+      <Name>title\holygoat</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Damaniel\Documents\Visual Studio 2010\Projects\TrackInsanity\TrackInsanity\TrackInsanity\bin\x86\Debug\Content\title\holygoat.xnb</Output>
+      <Time>2010-03-27T00:17:36.9781634-07:00</Time>
+    </Item>
+    <Item>
+      <Source>title\tapscreen.png</Source>
+      <Name>title\tapscreen</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Damaniel\Documents\Visual Studio 2010\Projects\TrackInsanity\TrackInsanity\TrackInsanity\bin\x86\Debug\Content\title\tapscreen.xnb</Output>
+      <Time>2010-03-27T00:17:36.9731631-07:00</Time>
+    </Item>
+    <Item>
+      <Source>title\titlemenu.png</Source>
+      <Name>title\titlemenu</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Damaniel\Documents\Visual Studio 2010\Projects\TrackInsanity\TrackInsanity\TrackInsanity\bin\x86\Debug\Content\title\titlemenu.xnb</Output>
+      <Time>2010-03-27T00:17:36.9821636-07:00</Time>
+    </Item>
+    <Item>
+      <Source>title\trainbannerbottom.png</Source>
+      <Name>title\trainbannerbottom</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Damaniel\Documents\Visual Studio 2010\Projects\TrackInsanity\TrackInsanity\TrackInsanity\bin\x86\Debug\Content\title\trainbannerbottom.xnb</Output>
+      <Time>2010-03-27T00:17:36.989164-07:00</Time>
+    </Item>
+    <Item>
+      <Source>title\trainbannertop.png</Source>
+      <Name>title\trainbannertop</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Damaniel\Documents\Visual Studio 2010\Projects\TrackInsanity\TrackInsanity\TrackInsanity\bin\x86\Debug\Content\title\trainbannertop.xnb</Output>
+      <Time>2010-03-27T00:17:36.9861638-07:00</Time>
+    </Item>
+    <Item>
+      <Source>title\titleScreenBlank.png</Source>
+      <Name>title\titleScreenBlank</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Damaniel\Documents\Visual Studio 2010\Projects\TrackInsanity\TrackInsanity\TrackInsanity\bin\x86\Debug\Content\title\titleScreenBlank.xnb</Output>
+      <Time>2010-04-01T23:32:51.9998163-07:00</Time>
+    </Item>
+    <Item>
+      <Source>title\insanityWord.png</Source>
+      <Name>title\insanityWord</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Damaniel\Documents\Visual Studio 2010\Projects\TrackInsanity\TrackInsanity\TrackInsanity\bin\x86\Debug\Content\title\insanityWord.xnb</Output>
+      <Time>2010-03-30T22:07:39.1703436-07:00</Time>
+    </Item>
+    <Item>
+      <Source>title\trackWord.png</Source>
+      <Name>title\trackWord</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Damaniel\Documents\Visual Studio 2010\Projects\TrackInsanity\TrackInsanity\TrackInsanity\bin\x86\Debug\Content\title\trackWord.xnb</Output>
+      <Time>2010-03-30T22:07:32.515963-07:00</Time>
+    </Item>
+    <Item>
+      <Source>title\copyright.png</Source>
+      <Name>title\copyright</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Damaniel\Documents\Visual Studio 2010\Projects\TrackInsanity\TrackInsanity\TrackInsanity\bin\x86\Debug\Content\title\copyright.xnb</Output>
+      <Time>2010-03-31T19:49:22.4036799-07:00</Time>
+    </Item>
+    <Item>
+      <Source>board\P1Turn.png</Source>
+      <Name>board\P1Turn</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Damaniel\Documents\Visual Studio 2010\Projects\TrackInsanity\TrackInsanity\TrackInsanity\bin\x86\Debug\Content\board\P1Turn.xnb</Output>
+      <Time>2010-04-04T01:54:49.0725597-07:00</Time>
+    </Item>
+    <Item>
+      <Source>board\P2Turn.png</Source>
+      <Name>board\P2Turn</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Damaniel\Documents\Visual Studio 2010\Projects\TrackInsanity\TrackInsanity\TrackInsanity\bin\x86\Debug\Content\board\P2Turn.xnb</Output>
+      <Time>2010-04-04T01:54:06.1251032-07:00</Time>
+    </Item>
+    <Item>
+      <Source>board\P3Turn.png</Source>
+      <Name>board\P3Turn</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Damaniel\Documents\Visual Studio 2010\Projects\TrackInsanity\TrackInsanity\TrackInsanity\bin\x86\Debug\Content\board\P3Turn.xnb</Output>
+      <Time>2010-04-04T01:53:36.5724129-07:00</Time>
+    </Item>
+    <Item>
+      <Source>board\P4Turn.png</Source>
+      <Name>board\P4Turn</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Damaniel\Documents\Visual Studio 2010\Projects\TrackInsanity\TrackInsanity\TrackInsanity\bin\x86\Debug\Content\board\P4Turn.xnb</Output>
+      <Time>2010-04-04T01:53:04.0275515-07:00</Time>
+    </Item>
+    <Item>
+      <Source>board\P5Turn.png</Source>
+      <Name>board\P5Turn</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Damaniel\Documents\Visual Studio 2010\Projects\TrackInsanity\TrackInsanity\TrackInsanity\bin\x86\Debug\Content\board\P5Turn.xnb</Output>
+      <Time>2010-04-04T01:55:38.3203765-07:00</Time>
+    </Item>
+    <Item>
+      <Source>board\P6Turn.png</Source>
+      <Name>board\P6Turn</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Damaniel\Documents\Visual Studio 2010\Projects\TrackInsanity\TrackInsanity\TrackInsanity\bin\x86\Debug\Content\board\P6Turn.xnb</Output>
+      <Time>2010-04-04T01:55:08.6006766-07:00</Time>
+    </Item>
+    <Item>
+      <Source>board\showingBoard.png</Source>
+      <Name>board\showingBoard</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Damaniel\Documents\Visual Studio 2010\Projects\TrackInsanity\TrackInsanity\TrackInsanity\bin\x86\Debug\Content\board\showingBoard.xnb</Output>
+      <Time>2010-04-04T20:42:47.1258373-07:00</Time>
+    </Item>
+    <Item>
+      <Source>board\showingBoard2.png</Source>
+      <Name>board\showingBoard2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Damaniel\Documents\Visual Studio 2010\Projects\TrackInsanity\TrackInsanity\TrackInsanity\bin\x86\Debug\Content\board\showingBoard2.xnb</Output>
+      <Time>2010-04-04T16:00:45.2539616-07:00</Time>
+    </Item>
+    <BuildSuccessful>true</BuildSuccessful>
+    <Settings>
+      <TargetPlatform>Windows</TargetPlatform>
+      <TargetProfile>Reach</TargetProfile>
+      <BuildConfiguration>Debug</BuildConfiguration>
+      <CompressContent>false</CompressContent>
+      <RootDirectory>C:\Users\Damaniel\Documents\Visual Studio 2010\Projects\TrackInsanity\TrackInsanity\TrackInsanityContent\</RootDirectory>
+      <LoggerRootDirectory>C:\Users\Damaniel\Documents\Visual Studio 2010\Projects\TrackInsanity\TrackInsanity\TrackInsanity\</LoggerRootDirectory>
+      <IntermediateDirectory>C:\Users\Damaniel\Documents\Visual Studio 2010\Projects\TrackInsanity\TrackInsanity\TrackInsanityContent\obj\x86\Debug\</IntermediateDirectory>
+      <OutputDirectory>C:\Users\Damaniel\Documents\Visual Studio 2010\Projects\TrackInsanity\TrackInsanity\TrackInsanity\bin\x86\Debug\Content\</OutputDirectory>
+    </Settings>
+    <Assemblies>
+      <Assembly>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.XImporter.dll</Key>
+        <Value>2010-03-04T18:40:04-08:00</Value>
+      </Assembly>
+      <Assembly>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.VideoImporters.dll</Key>
+        <Value>2010-03-04T18:40:04-08:00</Value>
+      </Assembly>
+      <Assembly>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.TextureImporter.dll</Key>
+        <Value>2010-03-04T18:40:04-08:00</Value>
+      </Assembly>
+      <Assembly>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.FBXImporter.dll</Key>
+        <Value>2010-03-04T18:40:04-08:00</Value>
+      </Assembly>
+      <Assembly>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.EffectImporter.dll</Key>
+        <Value>2010-03-04T18:40:06-08:00</Value>
+      </Assembly>
+      <Assembly>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.AudioImporters.dll</Key>
+        <Value>2010-03-04T18:40:04-08:00</Value>
+      </Assembly>
+      <Assembly>
+        <Key>C:\Windows\assembly\GAC_32\Microsoft.Xna.Framework.Content.Pipeline\4.0.0.0__6d5c3888ef60e27d\Microsoft.Xna.Framework.Content.Pipeline.dll</Key>
+        <Value>2010-03-15T22:14:46.1421327-07:00</Value>
+      </Assembly>
+    </Assemblies>
+  </Asset>
+</XnaContent>
