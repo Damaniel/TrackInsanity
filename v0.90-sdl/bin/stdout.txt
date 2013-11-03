@@ -1,8 +1,0 @@
-Changing render state to TI_STATE_COMPANY_LOGO
-Changing render state to TI_STATE_TITLE_SCREEN
-Changing render state to TI_STATE_TITLE_MENU_SCREEN
-Changing render state to TI_STATE_OPTIONS_SCREEN
-Changing render state to TI_STATE_TITLE_MENU_SCREEN
-Changing render state to TI_STATE_NEW_GAME_SCREEN
-Changing render state to TI_STATE_TITLE_MENU_SCREEN
-Changing render state to TI_STATE_END_GAME
