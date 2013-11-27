@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=TrackInsanity
+Type=Application
+Exec=trackInsanity.py
+Icon=icon
+Comment=A multiplayer board game
+Terminal=false
+Categories=games;

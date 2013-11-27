@@ -10,9 +10,19 @@ namespace TrackInsanity.Source
         /// </summary>
         static void Main(string[] args)
         {
-            using (TrackInsanity game = new TrackInsanity())
+            if(args.Length > 0 && (args[0] == "-S" || args[0] == "--server"))
             {
-                game.Run();
+                System.Console.WriteLine("Invoking as server...");
+                Server s = new Server();
+                s.Run();
+            }
+            else 
+            {
+                System.Console.WriteLine("Invoking as client...");
+                using (TrackInsanity game = new TrackInsanity())
+                {
+                    game.Run();
+                }
             }
         }
     }
