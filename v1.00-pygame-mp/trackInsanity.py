@@ -20,25 +20,21 @@ def main():
 	i = Input()
 	
 	r.initGraphics(wso)
-	r.loadAssets()
 	
 	# Kick off the renderer state machine
 	r.setInitialRenderState()
 	
 	while True:
-		r.updateLogic()
+		r.updateRenderLogic()
 		i.processInputs(r)
-		r.checkTimingConditions(pygame.time.get_ticks())
-		r.renderScreen()
+		r.checkRenderTimingConditions(pygame.time.get_ticks())
+		r.updateScreen()
 
-		pygame.display.update(r.dirtyRects)
+		pygame.display.update(r.getDirtyRects())
 		fpsClock.tick(30)
-
-		# Increment the frame counter (used to time some effects)
-		r.frameCount = r.frameCount + 1
 		
-		if r.dirtyRects != None:
-			del r.dirtyRects[:]
-			
+		r.clearDirtyRects()
+		r.checkTargetState()
+		
 if __name__ == '__main__':
 	main()
