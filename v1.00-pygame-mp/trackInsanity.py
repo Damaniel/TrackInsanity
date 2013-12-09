@@ -1,31 +1,44 @@
 #! /usr/bin/env python
 
 import pygame, sys
+from TIConsts import *
+from TIRender import Render
+from TIInput import Input
+
 from pygame.locals import *
 
-pygame.init()
-fpsClock = pygame.time.Clock()
+def main():
 
-pygame.mouse.set_visible(False)
-
-windowSurfaceObj = pygame.display.set_mode((320,240))
-pygame.display.set_caption('Stuff')
-
-redColor = pygame.Color(255, 0, 0)
-mockup = pygame.image.load('res/mockup.png').convert()
-
-while True:
-	windowSurfaceObj.blit(mockup, (0,0))
+	pygame.init()
+	fpsClock = pygame.time.Clock()
+	pygame.mouse.set_visible(False)
+	wso = pygame.display.set_mode((GAME_XRES, GAME_YRES))
+	pygame.display.set_caption('TrackInsanity v1.00 (Pygame)')
 	
-	for event in pygame.event.get():
-		if event.type == QUIT:
-			pygame.quit()
-			sys.exit()
-		elif event.type == KEYDOWN:
-			if event.key in (K_ESCAPE, K_RETURN):
-				pygame.event.post(pygame.event.Event(QUIT))
-				
-	pygame.display.update()
-	fpsClock.tick(30)
+	# Create the new renderer and input instance.
+	r = Render()	
+	i = Input()
 	
+	r.initGraphics(wso)
+	r.loadAssets()
+	
+	# Kick off the renderer state machine
+	r.setInitialRenderState()
+	
+	while True:
+		r.updateLogic()
+		i.processInputs(r)
+		r.checkTimingConditions(pygame.time.get_ticks())
+		r.renderScreen()
+
+		pygame.display.update(r.dirtyRects)
+		fpsClock.tick(30)
+
+		# Increment the frame counter (used to time some effects)
+		r.frameCount = r.frameCount + 1
+		
+		if r.dirtyRects != None:
+			del r.dirtyRects[:]
 			
+if __name__ == '__main__':
+	main()
