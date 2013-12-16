@@ -162,6 +162,234 @@ class Board:
 			for j in range(0, self.WIDTH):
 				self.legalMove[i].append(self.ILLEGAL_MOVE)
 	
+	#=======================================================================================
+	# findNextTrackSection()
+	#
+	# Given a position on the board and an exit point from that position, determine the
+	# corresponding board position an entry point that the exit position leads to.
+	# Returns a tuple containing the new position, entry point, and tile type contained 
+	# there.
+	#=======================================================================================		
+	def findNextTrackSection(self, x, y, exit):
+		newX = None
+		newY = None
+		enter = None
+		
+		if exit == 0:
+			newX = x
+			newY = y - 1
+			enter = 5
+		elif exit == 1:
+			newX = x
+			newY = y - 1
+			enter = 4
+		elif exit == 2:
+			newX = x + 1
+			newY = y
+			enter = 7
+		elif exit == 3:
+			newX = x + 1
+			newY = y
+			enter = 6
+		elif exit == 4:
+			newX = x
+			newY = y + 1
+			enter = 1
+		elif exit == 5:
+			newX = x
+			newY = y + 1
+			enter = 0
+		elif exit == 6:
+			newX = x - 1
+			newY = y
+			enter = 3
+		elif exit == 7:
+			newX = x - 1
+			newY = y
+			enter = 2
+		else:
+			newX = x
+			newY = y
+			enter = exit
+			
+		return (newX, newY, enter, self.b[newX][newY].type)
+	
+	#=======================================================================================
+	# markLegalMoves
+	#
+	# Given a tile, determines which moves on the board are legal positions for the tile.
+	#
+	# The basic rules determining legality are:
+	#   - Tiles can only be placed in designated 'tile' locations, not on stations, and
+	#     not in the corners between the groups of stations
+	#   - Tiles must be placed adjacent to an outer station, or adjacent to an already
+	#     played tile.
+	#   - A tile must not be played that would immediately cause a train to go from the
+	#     station to the same station with no intermediate tiles (so no placements that
+	#     score only one point).  This also applies to pieces that move a train from
+	#     a corner station to the adjacent corner station with a single piece of track
+	#     (a move which would also score only one point).
+	#   - If there are no tiles left to be drawn (that is, all tiles are either on the
+	#     board already or in a player's hand), then the previous 2 rules do not apply,
+	#     and a player may play the tile anywhere on the board where a tile could 
+	#     legally go (so no playing on stations or in the corners between them!
+	#=======================================================================================	
+	def markLegalMoves(self, t):
+		# Start by marking all moves as legal
+		for i in range(0, self.WIDTH):
+			for j in range(0, self.HEIGHT):
+				self.legalMove[i][j] = self.LEGAL_MOVE
+				
+		# Then, mark the 'obvious' illegal squares as such.  These include
+		# the corners and stations, which can never hold a tile.
+		for i in range(0, self.WIDTH):
+			self.legalMove[i][0] = self.ILLEGAL_MOVE
+			self.legalMove[i][self.HEIGHT-1] = self.ILLEGAL_MOVE
+			
+		for i in range(0, self.HEIGHT):
+			self.legalMove[0][i] = self.ILLEGAL_MOVE
+			self.legalMove[self.WIDTH-1][i] = self.ILLEGAL_MOVE
+			
+		self.legalMove[4][4] = self.ILLEGAL_MOVE
+		self.legalMove[4][5] = self.ILLEGAL_MOVE
+		self.legalMove[5][4] = self.ILLEGAL_MOVE
+		self.legalMove[5][5] = self.ILLEGAL_MOVE
+		
+		# Mark all already-played squares as illegal.
+		for i in range(1, self.WIDTH-1):
+			for j in range(1, self.HEIGHT-1):
+				if self.b[i][j].type == BoardSquare.PLAYED_TILE:
+					self.legalMove[i][j] = self.ILLEGAL_MOVE
+					
+		# Check the inner station squares for adjacent tiles.  For a square not adjacent
+		# to one of the outer stations, playing there is only legal if an adjacent square
+		# has already been played on.  If squares in all four of the cardinal directions
+		# are empty (or central stations), then the square should be marked as illegal.
+		for i in range(2, self.WIDTH-2):
+			for j in range(2, self.HEIGHT-2):
+				if self.b[i+1][j].type != BoardSquare.PLAYED_TILE and \
+				   self.b[i-1][j].type != BoardSquare.PLAYED_TILE and \
+				   self.b[i][j-1].type != BoardSquare.PLAYED_TILE and \
+				   self.b[i][j+1].type != BoardSquare.PLAYED_TILE:
+					self.legalMove[i][j] = self.ILLEGAL_MOVE
+		
+		# Check the outer station squares for track lengths of 1.  This check will be
+		# performed with 8 individual sets of checks (4 for the sides, 4 for the corners).
+		# (This check is done because, unless there are no other options, a player cannot
+		# place a tile adjacent to an outer station that would cause the train at that
+		# station to score only one point (by making the destination station the same
+		# as the source station with no intermediate tiles.)
+		for i in range(0, self.WIDTH-1):
+			if t.findExit(0) == 1:
+				self.legalMove[i][1] = self.ILLEGAL_MOVE
+			if t.findExit(5) == 4:
+				self.legalMove[i][self.HEIGHT-2] = self.ILLEGAL_MOVE
+				
+		for i in range(0, self.HEIGHT-1):
+			if t.findExit(3) == 2:
+				self.legalMove[self.WIDTH-2][i] = self.ILLEGAL_MOVE
+			if t.findExit(7) == 6:
+				self.legalMove[1][i] = self.ILLEGAL_MOVE
+				
+		# Check the top left corner
+		if t.findExit(6) == 1 or t.findExit(0) == 7:
+			self.legalMove[1][1] = self.ILLEGAL_MOVE
+			
+		# Check the top right corner
+		if t.findExit(2) == 1 or t.findExit(3) == 0:
+			self.legalMove[self.WIDTH-2][1] = self.ILLEGAL_MOVE
+			
+		# Check the bottom right corner
+		if t.findExit(4) == 3 or t.findExit(5) == 2:
+			self.legalMove[self.WIDTH-2][self.HEIGHT-2] = self.ILLEGAL_MOVE
+			
+		# Check the bottom left corner
+		if t.findExit(5) == 6 or t.findExit(4) == 7:
+			self.legalMove[1][self.HEIGHT-2] = self.ILLEGAL_MOVE
+			
+		# Count the legal moves on the board
+		legalMoves = 0
+		for i in range(0, self.WIDTH):
+			for j in range(0, self.HEIGHT):
+				if self.legalMove[i][j] == self.LEGAL_MOVE:
+					legalMoves = legalMoves + 1
+		
+		# At this point, if there are no legal moves, then check the tilepool.
+		# If there are no unplayed cards left in the pool (that is, all tiles 
+		# are either on the board or in player's hands), then all spaces where
+		# a tile could normally be played but which have been marked illegal 
+		# due to other rules will become marked legal (the rules state a tile
+		# can be played anywhere if there are no otherwise legal moves and
+		# there are no tiles left to be drawn).  
+		if legalMoves == 0 and self.tp.numUnplayedTiles() == 0:
+			for i in range(1, self.WIDTH-1):
+				for j in range(1, self.HEIGHT-1):
+					if self.b[i][j].type == BoardSquare.TILE:
+						self.legalMove[i][j] = self.LEGAL_MOVE
+		else:
+			return legalMoves
+		
+		# Finally, count the legal moves again and get an updated total.
+		legalMoves = 0
+		for i in range(0, self.WIDTH):
+			for j in range(0, self.HEIGHT):
+				if self.legalMove[i][j] == self.LEGAL_MOVE:
+					legalMoves = legalMoves + 1
+			
+		return legalMoves
+		
+	def getStationInfo(self, station):
+		if station >=0 and station < 8:
+			x = 1 + station
+			y = 0
+			exit = 5
+		elif station >=8 and station < 16:
+			x = 9
+			y = 1 + (station - 8)
+			exit = 7
+		elif station >=16 and station < 24:
+			x = 8 - (station - 16)
+			y = 9
+			exit = 1
+		elif station >=24 and station < 32:
+			x = 0
+			y = 8 - (station - 24)
+			exit = 3
+		else:
+			x = 0
+			y = 0
+			exit = 0
+			
+		return (x, y, exit)
+		
+	def getStationNumber(self, x, y):
+		if x == 0:
+			if y>=1 and y < (self.HEIGHT - 1):
+				station = 32 - y
+			else:
+				station = -1
+		elif x == (self.WIDTH - 1):
+			if y>=1 and y < (self.HEIGHT - 1):
+				station = 7 + y
+			else:
+				station = -1
+		elif y == 0:
+			if x>=1 and x < (self.WIDTH - 1):
+				station = x - 1
+			else:
+				station = -1
+		elif y == (self.HEIGHT - 1):
+			if x>=1 and x < (self.WIDTH - 1):
+				station = 24 - x
+			else:
+				station = -1
+		else:
+			station = -1
+			
+		return station
+		
+	#def calculateTrackScore
+	
 	# === Debug printing functions are below: ============================================
 	
 	#=======================================================================================
@@ -180,13 +408,36 @@ class Board:
 			print ""		
 		print "-------------------"
 		
+	#=======================================================================================
+	# printLegalMoves()
+	#=======================================================================================		
+	def printLegalMoves(self, t):
+		self.markLegalMoves(t)
+		print "------------------- (legal moves)"
+		for i in range(0, self.HEIGHT):
+			for j in range(0, self.WIDTH):
+				print self.legalMove[j][i],
+			print ""
+		print "-------------------"
+
+	#=======================================================================================
+	# printStationInfo()
+	#=======================================================================================		
+	def printStationInfo(self):
+		for i in range(0, self.HEIGHT):
+			for j in range(0, self.WIDTH):
+				print str(self.getStationNumber(j, i)), 
+			print ""
+			
 # This is testing code!
 def main():
 	b = Board()
 	
 	# Let's print something.
-	b.printBoard()
-	b.tp.printTilePool()
+	#b.printBoard()
+	#b.tp.printTilePool()
+	#b.printLegalMoves(b.tp.t[58])	
+	#b.printStationInfo()
 	
 if __name__ == '__main__':
 	main()
