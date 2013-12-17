@@ -44,10 +44,13 @@ class BoardSquare:
 	# Sets the tile index of this board square (if a tile has been placed).
 	#=======================================================================================		
 	def setTileIndex(self, index):
-		if self.type == TILE:
+		if self.type == self.TILE:
 			self.tileIndex = index
-			self.type = PLAYED_TILE
-			
+			self.type = self.PLAYED_TILE
+			return True
+		else:
+			return False
+		
 class Board:
 
 	# The board width and height (in tiles) - though the outermost rows aren't really (directly) used
@@ -101,7 +104,7 @@ class Board:
 		
 		self.initBoardSquares()
 		self.initOtherArrays()
-	
+		
 	#=======================================================================================
 	# initBoardSquares()
 	#
@@ -162,6 +165,20 @@ class Board:
 			for j in range(0, self.WIDTH):
 				self.legalMove[i].append(self.ILLEGAL_MOVE)
 	
+	#=======================================================================================
+	# populateStations()
+	#
+	# Place the correct player trains in the starting stations, depending on how many
+	# players are playing.
+	#=======================================================================================		
+	def populateStations(self, numPlayers):
+		if numPlayers < 2 or numPlayers > 6:
+			return False
+		for i in range(0, self.NUM_STATIONS):
+			(x, y, exit) = self.getStationInfo(i)
+			self.b[x][y].trainPresent = self.BOARD_STATION_DATA[numPlayers][i]
+		return True
+		
 	#=======================================================================================
 	# findNextTrackSection()
 	#
@@ -338,19 +355,29 @@ class Board:
 			
 		return legalMoves
 		
+	#=======================================================================================
+	# getStationInfo
+	#
+	# Given a station ID (0-31), returns the x and y position (in tiles) on the board,
+	# as well as the train's exit position from the station (0-8).
+	#=======================================================================================			
 	def getStationInfo(self, station):
+		# The top stations (0-7)
 		if station >=0 and station < 8:
 			x = 1 + station
 			y = 0
 			exit = 5
+		# The right side stations (8-15)
 		elif station >=8 and station < 16:
 			x = 9
 			y = 1 + (station - 8)
 			exit = 7
+		# The bottom stations (16-23)
 		elif station >=16 and station < 24:
 			x = 8 - (station - 16)
 			y = 9
 			exit = 1
+		# The left stations (24-31)
 		elif station >=24 and station < 32:
 			x = 0
 			y = 8 - (station - 24)
@@ -361,7 +388,13 @@ class Board:
 			exit = 0
 			
 		return (x, y, exit)
-		
+
+	#=======================================================================================
+	# getStationNumber
+	#
+	# Returns the station number of the station situated at the specified x and y position.
+	# Returns -1 if no station is found there (or if the station is a central station). 
+	#=======================================================================================		
 	def getStationNumber(self, x, y):
 		if x == 0:
 			if y>=1 and y < (self.HEIGHT - 1):
@@ -388,8 +421,154 @@ class Board:
 			
 		return station
 		
-	#def calculateTrackScore
+	#=======================================================================================
+	# calculateTrackScore()
+	#
+	# Determines the score of a completed track given a specific station (or a partial track
+	# if the player is an AI player evaluating moves).
+	#=======================================================================================		
+	def calculateTrackScore(self, station, passThruTileId):
 	
+		# passThruTileId is a variable that contains a tile ID (or NONE for human players).  The tile ID
+		# is used to determine whether the score obtained as a result of this board position is a result
+		# of the tile that has been specified in passThruTileId.  For AI players, knowing whether the 
+		# move itself is responsible for the score is important for deciding move value.  
+		# If the tile was involved in the score, then passThruTile is set to True and returned, otherwise
+		# it is set to false.  
+		#
+		# For human players, these values are ignored (scoring is only done for human players when a
+		# track section is completed.  AI players evaluate all legal board positions for value, hence
+		# the need to treat their case separately.
+		#
+		# loopLimit is used to prevent the track traversal code from getting into an infinite loop.  The
+		# code should never do this anyway; this is merely a failsafe that would allow me to debug
+		# issues with determining legal board moves (legal moves never generate infinite loops).
+		
+		passThruTile = None
+		loopLimit = 255
+		
+		if passThruTileId != Tile.NONE:
+			passThruTile = False
+			
+		(stationX, stationY, stationExit) = self.getStationInfo(station)
+		if self.b[stationX][stationY].type != BoardSquare.STATION:
+			print "calculateTrackScore: starting point isn't station!"
+			return (None, None, None)
+			
+		if self.b[stationX][stationY].trainPresent == self.NO_TRAIN:
+			print "calculateTrackScore: no train at starting station!"
+			return (None, None, None)
+			
+		(newX, newY, newExit, newType) = self.findNextTrackSection(stationX, stationY, stationExit)
+		
+		# Traverse the track while lengths of track still exist.  Keep track of the number of segments
+		# seen.  If we've seen more than 255, assume we've hit some kind of infinite loop and exit the
+		# while loop.
+		loopCatcher = 0
+		score = 0
+		while newType == BoardSquare.PLAYED_TILE and loopCatcher < loopLimit:
+			if passThruTileId != Tile.NONE and self.b[newX][newY].tileIndex == passThruTileId and self.passThruTile != None:
+				passThruTile = True
+			score = score + 1
+			loopCatcher = loopCatcher + 1
+			(oldX, oldY, oldExit) = (newX, newY, self.tp.getTile(self.b[newX][newY].tileIndex).findExit(newExit))
+			(newX, newY, newExit, newType) = self.findNextTrackSection(oldX, oldY, oldExit)
+			
+		if loopCatcher >= loopLimit:
+			print "calculateTrackScore: infinite loop caught"
+			return (None, None, None)
+		
+		destination = self.b[newX][newY].type
+		
+		# If the destination isn't a station and we're calculating score for a human player, that's
+		# bad.  Note:  Human players always pass in Tile.NONE as their argument to passThruTileId
+		if passThruTileId == Tile.NONE and \
+		   destination != BoardSquare.STATION and \
+		   destination != BoardSquare.CENTRAL_STATION:
+			print "calculateTrackScore: human player track destination not station!"
+			return (None, None, None)
+			
+		# If the destination was a central station, double the score
+		if destination == BoardSquare.CENTRAL_STATION:
+			score = score * 2
+			
+		return (score, passThruTile, destination)
+		
+	#=======================================================================================
+	# placeTile()
+	#
+	# If a move (placement if a specified tile index at a specified x, y location) is legal,
+	# then make the move.
+	#=======================================================================================
+	def placeTile(self, x, y, index):
+		if x < 0 or y < 0 or x >= self.WIDTH or y >= self.HEIGHT:
+			return self.ILLEGAL_MOVE
+			
+		if self.b[x][y].type != BoardSquare.TILE:
+			return self.ILLEGAL_MOVE
+			
+		if self.isLegalMove(x, y) == False:
+			return self.ILLEGAL_MOVE
+			
+		if self.b[x][y].tileIndex != Tile.NONE:
+			return self.ILLEGAL_MOVE
+			
+		result = self.b[x][y].setTileIndex(index)
+		if result == True:
+			return self.LEGAL_MOVE
+		else:
+			return self.ILLEGAL_MOVE
+			
+	#=======================================================================================
+	# isLegalMove()
+	#
+	# Determines if a move is legal or not.
+	#=======================================================================================
+	def isLegalMove(self, x, y):
+		if self.legalMove[x][y] == self.LEGAL_MOVE:
+			return True
+		else:
+			return False
+	
+	#=======================================================================================
+	# getTrackStatus()
+	#
+	# getter function for track status (for a specified station)
+	#=======================================================================================	
+	def getTrackStatus(self, index):
+		if index < 0 or index > self.NUM_STATIONS:
+			return None
+		
+		return self.trackStatus[index]
+		
+	#=======================================================================================
+	# setTrackStatus()
+	#
+	# setter function for track status (for a specified station and status value)
+	#=======================================================================================			
+	def setTrackStatus(self, index, status):
+		if index >=0 and index < self.NUM_STATIONS:
+			self.trackStatus[index] = status
+			
+	#=======================================================================================
+	# removeTile()
+	#
+	# removes a tile from the board at the specified location.
+	#=======================================================================================				
+	def removeTile(self, x, y):
+		if x < 0 or y < 0 or x >= self.WIDTH or y >= self.HEIGHT:
+			return False
+		
+		if self.b[x][y].type != BoardSquare.PLAYED_TILE:
+			return False
+			
+		if self.b[x][y].tileIndex == Tile.NONE:
+			return False
+			
+		self.b[x][y].tileIndex = Tile.NONE
+		self.b[x][y].type = BoardSquare.TILE
+		return True
+		
 	# === Debug printing functions are below: ============================================
 	
 	#=======================================================================================
@@ -429,15 +608,3 @@ class Board:
 				print str(self.getStationNumber(j, i)), 
 			print ""
 			
-# This is testing code!
-def main():
-	b = Board()
-	
-	# Let's print something.
-	#b.printBoard()
-	#b.tp.printTilePool()
-	#b.printLegalMoves(b.tp.t[58])	
-	#b.printStationInfo()
-	
-if __name__ == '__main__':
-	main()
