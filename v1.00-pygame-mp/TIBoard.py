@@ -5,11 +5,13 @@
 # TIBoard.py
 #
 # Contains a single instance of a game board, including the board itself,
-# station information, the tile pool, and other things.
+# station information, and other miscellaneous things.  The tile pool used to
+# be here too, but it's not really a part of the board, and is now tracked
+# in the Game class.  
 #
+# This implementation contains all functions from the C#/XNA version of the 
+# game, and all are believed to work properly.
 #=============================================================================
-
-from TITilePool import *
 from TITile import *
 
 class BoardSquare:
@@ -100,7 +102,7 @@ class Board:
 		self.legalMove = []
 		self.trackStatus = []
 	
-		self.tp = TilePool()
+		#self.tp = TilePool()
 		
 		self.initBoardSquares()
 		self.initOtherArrays()
@@ -251,7 +253,7 @@ class Board:
 	#     and a player may play the tile anywhere on the board where a tile could 
 	#     legally go (so no playing on stations or in the corners between them!
 	#=======================================================================================	
-	def markLegalMoves(self, t):
+	def markLegalMoves(self, t, poolCount):
 		# Start by marking all moves as legal
 		for i in range(0, self.WIDTH):
 			for j in range(0, self.HEIGHT):
@@ -331,14 +333,14 @@ class Board:
 				if self.legalMove[i][j] == self.LEGAL_MOVE:
 					legalMoves = legalMoves + 1
 		
-		# At this point, if there are no legal moves, then check the tilepool.
+		# At this point, if there are no legal moves, then check the poolCount.
 		# If there are no unplayed cards left in the pool (that is, all tiles 
 		# are either on the board or in player's hands), then all spaces where
 		# a tile could normally be played but which have been marked illegal 
 		# due to other rules will become marked legal (the rules state a tile
 		# can be played anywhere if there are no otherwise legal moves and
 		# there are no tiles left to be drawn).  
-		if legalMoves == 0 and self.tp.numUnplayedTiles() == 0:
+		if legalMoves == 0 and poolCount == 0:
 			for i in range(1, self.WIDTH-1):
 				for j in range(1, self.HEIGHT-1):
 					if self.b[i][j].type == BoardSquare.TILE:
@@ -420,79 +422,6 @@ class Board:
 			station = -1
 			
 		return station
-		
-	#=======================================================================================
-	# calculateTrackScore()
-	#
-	# Determines the score of a completed track given a specific station (or a partial track
-	# if the player is an AI player evaluating moves).
-	#=======================================================================================		
-	def calculateTrackScore(self, station, passThruTileId):
-	
-		# passThruTileId is a variable that contains a tile ID (or NONE for human players).  The tile ID
-		# is used to determine whether the score obtained as a result of this board position is a result
-		# of the tile that has been specified in passThruTileId.  For AI players, knowing whether the 
-		# move itself is responsible for the score is important for deciding move value.  
-		# If the tile was involved in the score, then passThruTile is set to True and returned, otherwise
-		# it is set to false.  
-		#
-		# For human players, these values are ignored (scoring is only done for human players when a
-		# track section is completed.  AI players evaluate all legal board positions for value, hence
-		# the need to treat their case separately.
-		#
-		# loopLimit is used to prevent the track traversal code from getting into an infinite loop.  The
-		# code should never do this anyway; this is merely a failsafe that would allow me to debug
-		# issues with determining legal board moves (legal moves never generate infinite loops).
-		
-		passThruTile = None
-		loopLimit = 255
-		
-		if passThruTileId != Tile.NONE:
-			passThruTile = False
-			
-		(stationX, stationY, stationExit) = self.getStationInfo(station)
-		if self.b[stationX][stationY].type != BoardSquare.STATION:
-			print "calculateTrackScore: starting point isn't station!"
-			return (None, None, None)
-			
-		if self.b[stationX][stationY].trainPresent == self.NO_TRAIN:
-			print "calculateTrackScore: no train at starting station!"
-			return (None, None, None)
-			
-		(newX, newY, newExit, newType) = self.findNextTrackSection(stationX, stationY, stationExit)
-		
-		# Traverse the track while lengths of track still exist.  Keep track of the number of segments
-		# seen.  If we've seen more than 255, assume we've hit some kind of infinite loop and exit the
-		# while loop.
-		loopCatcher = 0
-		score = 0
-		while newType == BoardSquare.PLAYED_TILE and loopCatcher < loopLimit:
-			if passThruTileId != Tile.NONE and self.b[newX][newY].tileIndex == passThruTileId and self.passThruTile != None:
-				passThruTile = True
-			score = score + 1
-			loopCatcher = loopCatcher + 1
-			(oldX, oldY, oldExit) = (newX, newY, self.tp.getTile(self.b[newX][newY].tileIndex).findExit(newExit))
-			(newX, newY, newExit, newType) = self.findNextTrackSection(oldX, oldY, oldExit)
-			
-		if loopCatcher >= loopLimit:
-			print "calculateTrackScore: infinite loop caught"
-			return (None, None, None)
-		
-		destination = self.b[newX][newY].type
-		
-		# If the destination isn't a station and we're calculating score for a human player, that's
-		# bad.  Note:  Human players always pass in Tile.NONE as their argument to passThruTileId
-		if passThruTileId == Tile.NONE and \
-		   destination != BoardSquare.STATION and \
-		   destination != BoardSquare.CENTRAL_STATION:
-			print "calculateTrackScore: human player track destination not station!"
-			return (None, None, None)
-			
-		# If the destination was a central station, double the score
-		if destination == BoardSquare.CENTRAL_STATION:
-			score = score * 2
-			
-		return (score, passThruTile, destination)
 		
 	#=======================================================================================
 	# placeTile()
@@ -591,7 +520,7 @@ class Board:
 	# printLegalMoves()
 	#=======================================================================================		
 	def printLegalMoves(self, t):
-		self.markLegalMoves(t)
+		self.markLegalMoves(t, 60)
 		print "------------------- (legal moves)"
 		for i in range(0, self.HEIGHT):
 			for j in range(0, self.WIDTH):

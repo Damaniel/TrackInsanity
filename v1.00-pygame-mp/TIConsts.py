@@ -18,12 +18,12 @@
 #
 #=============================================================================
 
-OK = 0
-ERROR = -1
-
 # The base game resolution
 GAME_XRES = 320
 GAME_YRES = 240
+
+MIN_PLAYERS = 2
+MAX_PLAYERS = 6
 
 # Render states.  Used by the renderer to decide what to draw on the screen
 # at any point in time.

@@ -9,8 +9,11 @@
 # and can either be 'played' or 'unplayed' depending on whether it's on the
 # board or not.
 #
+# This implementation contains all functions from the C#/XNA version of the 
+# game, and all are believed to work properly.
 #=============================================================================
 
+import random
 from TITile import *
 
 class TilePool:
@@ -29,6 +32,8 @@ class TilePool:
 	# it is the 'exit' position from that tile.  Therefore, if index 0 has
 	# a value of 1, then this means that the top left entrance exits on 
 	# the top right (making a U shape on the tile itself.
+	#
+	# (There's a pretty graphic in TITile.py if you're still confused...)
 	#
 	# The ninth value is the tile index offset - that is, how many tiles
 	# away from the leftmost tile in the (graphical) tilestrp the 
@@ -150,7 +155,23 @@ class TilePool:
 	# Returns a random unplayed tile from the pool.
 	#=======================================================================================			
 	def drawRandomTile(self):
-		return 0
+		if self.numUnplayedTiles() <= 0:
+			return Tile.INVALID
+			
+		offset = random.randint(0, self.numUnplayedTiles() - 1)
+		index = self.unplayedTiles[offset]
+		
+		if self.tileStatus[index] == self.PLAYED:
+			print "error: played tile selected from pool!"
+			return Tile.ERROR
+			
+		# Mark the tile as played now, and update the played/unplayed lists accordingly
+		self.tileStatus[index] = self.PLAYED
+		self.calculatePlayedTiles()
+		self.calculateUnplayedTiles()
+		
+		return index
+		
 		
 	#=======================================================================================
 	# returnTileToPool()
@@ -159,14 +180,14 @@ class TilePool:
 	#=======================================================================================			
 	def returnTileToPool(self, index):
 		if self.numPlayedTiles() == 0:
-			return Tile.ERROR
+			return False
 		if self.tileStatus[index] == self.UNPLAYED:
-			return Tile.ERROR
+			return False
 			
 		self.tileStatus[index] = self.UNPLAYED
 		self.calculatePlayedTiles()
 		self.calculateUnplayedTiles()		
-		return Tile.OK
+		return True
 		
 	#=======================================================================================
 	# calculatePlayedTiles()

@@ -4,6 +4,28 @@
 #
 # TITile.py
 #
+# Information about a tile (a playable piece that contains various track
+# sections.  The tile type is defined by the source and destinations of the
+# track sections on the piece, as defined by a set of 8 locations.  
+#
+# +--|--|--+
+# |  0  1  |
+# -7      2-
+# |        |
+# -6      3-
+# |  5  4  |
+# +--|--|--+
+#
+# Each track starts at one of the 8 locations and exits at another, and on
+# each tile, every one of the 8 locations is part of one of the tracks.  
+# In other words, there are always four track sections on a tile.  
+#
+# The tiles also contain a 'strip offset', which is used to assist with
+# finding the correct graphical representation in the tile strip, a giant
+# graphic containing all of the possible tiles. 
+#
+# This implementation contains all functions from the C#/XNA version of the 
+# game, and all are believed to work properly.
 #=============================================================================
 
 class Tile:
