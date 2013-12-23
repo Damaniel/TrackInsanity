@@ -61,3 +61,6 @@ class Render:
 		if Render.crs.targetState != None:
 			Render.changeRenderState(Render.crs.targetState)
 	
+	@staticmethod
+	def processInputs():
+		Render.crs.processInputs()

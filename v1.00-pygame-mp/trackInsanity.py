@@ -4,7 +4,6 @@ import pygame, sys
 from TIConsts import *
 from TIRender import Render
 from TIInput import Input
-
 from pygame.locals import *
 
 def main():
@@ -14,27 +13,25 @@ def main():
 	pygame.mouse.set_visible(False)
 	wso = pygame.display.set_mode((GAME_XRES, GAME_YRES))
 	pygame.display.set_caption('TrackInsanity v1.00 (Pygame)')
+
+	r = Render()
 	
-	# Create the new renderer and input instance.
-	r = Render()	
-	i = Input()
-	
-	r.initGraphics(wso)
+	Render.initGraphics(wso)
 	
 	# Kick off the renderer state machine
-	r.setInitialRenderState()
+	Render.setInitialRenderState()
 	
 	while True:
-		r.updateRenderLogic()
-		i.processInputs(r)
-		r.checkRenderTimingConditions(pygame.time.get_ticks())
-		r.updateScreen()
+		Render.updateRenderLogic()
+		Render.processInputs()
+		Render.checkRenderTimingConditions(pygame.time.get_ticks())
+		Render.updateScreen()
 
-		pygame.display.update(r.getDirtyRects())
+		pygame.display.update(Render.getDirtyRects())
 		fpsClock.tick(30)
 		
-		r.clearDirtyRects()
-		r.checkTargetState()
+		Render.clearDirtyRects()
+		Render.checkTargetState()
 		
 if __name__ == '__main__':
 	main()

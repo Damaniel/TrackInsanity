@@ -15,7 +15,8 @@
 #                  round (like draw, then play), if desired.
 #
 # ** This implementation contains all necessary functions from the C#/XNA 
-# version of the game.  Not all functions are debugged though.
+# version of the game.  While nothing crashes, the code isn't fully debugged
+# yet.
 #=============================================================================
 import copy
 from TIGame import *

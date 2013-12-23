@@ -27,17 +27,18 @@ MAX_PLAYERS = 6
 
 # Render states.  Used by the renderer to decide what to draw on the screen
 # at any point in time.
+# All of the 'title screen' displays (the title screen, options screen,
+# new game screen, etc) are substates of the RENDER_STATE_TITLE_SCREEN
+# state.  This is because that state requires the ability to render 
+# parts of multiple display states at a time, and having a full set of
+# 'full' states for those states would require each one have a full set
+# of title screen assets that loads when the state is initialized.  
 RENDER_STATE_NONE = 0
 RENDER_STATE_COMPANY_LOGO = 1
 RENDER_STATE_TITLE_SCREEN = 2
-RENDER_STATE_TITLE_MENU_SCREEN = 3
-RENDER_STATE_NEW_GAME_SCREEN = 4
-RENDER_STATE_OPTIONS_SCREEN = 5
-RENDER_STATE_MULTIPLAYER_LOGIN_SCREEN = 6
-RENDER_STATE_MULTIPLAYER_LOBBY_SCREEN = 7
-RENDER_STATE_IN_GAME = 8
-RENDER_STATE_GAME_RESULTS_SCREEN = 9
-RENDER_STATE_END_GAME = 10
+RENDER_STATE_IN_GAME = 3
+RENDER_STATE_GAME_RESULTS_SCREEN = 4
+RENDER_STATE_END_GAME = 5
 
 
 # The speed (represented in percentage of alpha channel to add to total alpha
@@ -88,3 +89,13 @@ RENDER_TITLE_COPYRIGHT_TEXT_Y = 193
 
 RENDER_TITLE_PRESS_START_X = 43
 RENDER_TITLE_PRESS_START_Y = 130
+
+RENDER_TITLE_OPTION_NEW_GAME_X = 101
+RENDER_TITLE_OPTION_NEW_GAME_Y = 100
+RENDER_TITLE_OPTION_OPTIONS_X = 117
+RENDER_TITLE_OPTION_OPTIONS_Y = 127
+RENDER_TITLE_OPTION_QUIT_X = 138
+RENDER_TITLE_OPTION_QUIT_Y = 153
+
+RENDER_TITLE_OPTION_HIGHLIGHT_ARROW_LEFT_X = 86
+RENDER_TITLE_OPTION_HIGHLIGHT_ARROW_RIGHT_X = 225

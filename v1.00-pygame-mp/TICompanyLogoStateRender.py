@@ -3,7 +3,6 @@
 import pygame
 from pygame.locals import *
 from TIConsts import *
-from TIRender import *
 from TIStateRender import StateRender
 
 class CompanyLogoStateRender(StateRender):
@@ -178,3 +177,11 @@ class CompanyLogoStateRender(StateRender):
 			self.windowSurfaceObj.blit(self.insanityWord, (self.insanityWordXPos, RENDER_WORDS_Y))
 		return
 			
+	def processInputs(self):			
+		for event in pygame.event.get():		
+			if event.type == QUIT:
+				pygame.quit()
+				sys.exit()
+			elif event.type == KEYDOWN:
+				self.targetState = RENDER_STATE_TITLE_SCREEN
+				return

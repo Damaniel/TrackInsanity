@@ -37,3 +37,7 @@ class StateRender:
 	@abstractmethod
 	def renderScreen(self):
 		pass
+		
+	@abstractmethod
+	def processInputs(self):
+		pass
