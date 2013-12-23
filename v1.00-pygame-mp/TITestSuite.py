@@ -9,10 +9,16 @@
 # being passed around everywhere.
 #=============================================================================
 
-import copy
+import copy, sys
 from TIBoard import BoardSquare, Board
 from TITilePool import TilePool
 from TITile import Tile
+from TISharedData import SharedData
+from TIPlayer import Player
+from TIGame import Game
+from TIComputerAI import ComputerAI, ComputerAIPacket
+
+g = Game()
 
 def runBoardTests():
 
@@ -110,18 +116,119 @@ def runTilePoolTests():
 		tiles.append(val)
 
 	return True
+
+def setUpTextGameInstance():
 	
+	# Get number of players
+	while True:
+		players = raw_input("Number of players (2-6):").strip()
+		try:
+			players = int(players)
+		except:
+			players = 2
+		if players >= 2 and players <= 6:
+			break
+			
+	# Determine how many human/CPU players
+	playerTypes = []
+	for i in range(0, players):
+		while True:
+			tmpType = raw_input("Player " + str(i+1) + " - [H]uman or [C]omputer:").strip()
+			if tmpType[0] == 'H' or tmpType[0] == 'h':
+				playerTypes.append(Player.HUMAN)
+				break
+			elif tmpType[0] == 'C' or tmpType[0] == 'c':
+				playerTypes.append(Player.COMPUTER)
+				break
+				
+	# Determine the level
+	while True:
+		level = raw_input("AI level (1/2/3 - 1 is easy, 3 is hard):").strip()
+		try:
+			level = int(level)
+		except:
+			level = 1
+		if level >=1 and level <=3:
+			break
+	
+	# Fill the shared data structure with this information
+	SharedData.selectedPlayers = players
+	SharedData.playerState = []
+	for i in range(0, len(playerTypes)):
+		SharedData.playerState.append(playerTypes[i])
+	
+	if level == 1:
+		g.defaultAILevel = Game.OPTION_AI_EASY
+	elif level == 2:
+		g.defaultAILevel = Game.OPTION_AI_MEDIUM
+	elif level == 3:
+		g.defaultAILevel = Game.OPTION_AI_HARD
+		
+	g.initPlayersFromUi()
+	
+	print ""
+	print "Number of players: " + str(SharedData.selectedPlayers)
+	print "Player types:"
+	for i in range(0, SharedData.selectedPlayers):
+		print "   " + str(i+1) + " - ",
+		if SharedData.playerState[i] == Player.HUMAN:
+			print "Human"
+		else:
+			print "Computer",
+			if g.defaultAILevel == Game.OPTION_AI_EASY:
+				print "(easy)"
+			elif g.defaultAILevel == Game.OPTION_AI_MEDIUM:
+				print "(medium)"
+			elif g.defaultAILevel == Game.OPTION_AI_HARD:
+				print "(hard)"
+			else:
+				print "(unknown)"
+	print ""
+	
+# This is a bare minimum game player that supports computer players only
+# human players can be selected, but they auto-pass.  It's mostly to make
+# sure that the AI routines (and their support functions) don't crash.
+def runGameInstance():
+	g.changeState(Game.GAME_STATE_NEXT_PLAYER_TURN)
+	finished = False
+	
+	while finished == False:
+		g.board.printBoard()
+		print "Player " + str(g.curPlayer +1) + "'s turn:"
+		if SharedData.playerState[g.curPlayer] == Player.HUMAN:
+			print "Passing..."
+			g.changeState(Game.GAME_STATE_END_TURN)	
+		else:
+			print "Computer turn now!"
+			SharedData.currentMove = ComputerAI.determineNextMove(g, None)
+			while SharedData.currentMove.moveType != ComputerAI.ACTION_END_TURN:
+				g.applyComputerMove()
+				SharedData.previousMove = SharedData.currentMove
+				SharedData.currentMove = ComputerAI.determineNextMove(g, SharedData.previousMove)
+			g.changeState(Game.GAME_STATE_END_TURN)
+		
+		if g.gameState == Game.GAME_STATE_GAME_FINISHED:
+			print "Game is done!"
+			finished = True
+			
+	print "Final scores:"
+	for i in range(0, SharedData.selectedPlayers):
+		print "  Player " + str(i+1) +  " - " + str(g.players[i].score)
+		
 def main():
-	result = runBoardTests()
-	if result == False:
-		print "runBoardTests: FAILED"
-	else:
-		print "runBoardTests: PASSED"
-	result = runTilePoolTests()
-	if result == False:
-		print "runTilePoolTests: FAILED"
-	else:
-		print "runTilePoolTests: PASSED"
+	setUpTextGameInstance()
+	runGameInstance()
+	
+	#result = runBoardTests()
+	#if result == False:
+	#	print "runBoardTests: FAILED"
+	#else:
+	#	print "runBoardTests: PASSED"
+	#result = runTilePoolTests()
+	#if result == False:
+	#	print "runTilePoolTests: FAILED"
+	#else:
+	#	print "runTilePoolTests: PASSED"
 	
 if __name__ == '__main__':
 	main()

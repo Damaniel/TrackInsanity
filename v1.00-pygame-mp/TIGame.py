@@ -19,6 +19,7 @@ from TIBoard import *
 from TIPlayer import *
 from TISharedData import *
 from TIConsts import *
+from TIComputerAI import *
 
 class Game:
 
@@ -45,6 +46,7 @@ class Game:
 	
 	OPTION_NO = 0
 	OPTION_YES = 1
+	
 	OPTION_HIGHLIGHT_LAST_PLAYER = 2
 	OPTION_HIGHLIGHT_ALL_PLAYERS = 3
 	OPTION_AI_EASY = 0
@@ -58,7 +60,7 @@ class Game:
 		
 		self.highlightTracks = self.OPTION_YES
 		self.highlightLegalMoves = self.OPTION_YES
-		self.showLastMove = self.OPTION_ALL_PLAYERS
+		self.showLastMove = self.OPTION_HIGHLIGHT_ALL_PLAYERS
 		self.defaultAILevel = self.OPTION_AI_MEDIUM
 		self.musicVolume = 4
 		self.effectsVolume = 4
@@ -147,7 +149,7 @@ class Game:
 			for i in range(0, self.numPlayers):
 				if self.players[i].controlledBy == Player.HUMAN:
 					humanPlayers = humanPlayers + 1
-			if humanPlayers == 1 || self.players[self.curPlayer].controlledBy == Player.COMPUTER:
+			if humanPlayers == 1 or self.players[self.curPlayer].controlledBy == Player.COMPUTER:
 				self.changeState(self.GAME_STATE_SELECT_ACTION)
 			return True
 		
@@ -157,7 +159,7 @@ class Game:
 				self.changeState(self.GAME_STATE_COMPUTER_MOVE)
 			else:
 				# If a player holds 2 tiles, be sure that 'draw tile' gets disabled
-				if self.players[self.curPlayer].currentTileId != Tile.NONE && \
+				if self.players[self.curPlayer].currentTileId != Tile.NONE and \
 				   self.players[self.curPlayer].reserveTileId != Tile.NONE:
 					self.playerHasDrawn = True
 				
@@ -332,8 +334,8 @@ class Game:
 			print "calculateTrackScore: starting point isn't station!"
 			return (None, None, None)
 			
-		if self.board.b[stationX][stationY].trainPresent == self.NO_TRAIN:
-			print "calculateTrackScore: no train at starting station!"
+		# No train is present, so there's no score.
+		if self.board.b[stationX][stationY].trainPresent == Board.NO_TRAIN:
 			return (None, None, None)
 			
 		(newX, newY, newExit, newType) = self.board.findNextTrackSection(stationX, stationY, stationExit)
@@ -344,11 +346,11 @@ class Game:
 		loopCatcher = 0
 		score = 0
 		while newType == BoardSquare.PLAYED_TILE and loopCatcher < loopLimit:
-			if passThruTileId != Tile.NONE and self.board.b[newX][newY].tileIndex == passThruTileId and self.passThruTile != None:
+			if passThruTileId != Tile.NONE and self.board.b[newX][newY].tileIndex == passThruTileId:
 				passThruTile = True
 			score = score + 1
 			loopCatcher = loopCatcher + 1
-			(oldX, oldY, oldExit) = (newX, newY, self.tilepool.getTile(self.b[newX][newY].tileIndex).findExit(newExit))
+			(oldX, oldY, oldExit) = (newX, newY, self.tilepool.getTile(self.board.b[newX][newY].tileIndex).findExit(newExit))
 			(newX, newY, newExit, newType) = self.board.findNextTrackSection(oldX, oldY, oldExit)
 			
 		if loopCatcher >= loopLimit:
@@ -358,24 +360,23 @@ class Game:
 		destination = self.board.b[newX][newY].type
 		
 		# If the destination isn't a station and we're calculating score for a human player, that's
-		# bad.  Note:  Human players always pass in Tile.NONE as their argument to passThruTileId
+		# bad.  Note: the 'checkCompletedStations' function can get here just fine.
 		if passThruTileId == Tile.NONE and \
 		   destination != BoardSquare.STATION and \
 		   destination != BoardSquare.CENTRAL_STATION:
-			print "calculateTrackScore: human player track destination not station!"
 			return (None, None, None)
 			
 		# If the destination was a central station, double the score
 		if destination == BoardSquare.CENTRAL_STATION:
 			score = score * 2
-			
+		
 		return (score, passThruTile, destination)
 		
 	def applyComputerMove(self):
-		cur = SharedDate.currentMove
+		cur = SharedData.currentMove
 		
 		if cur.moveType == ComputerAI.ACTION_DRAW:
-			if self.players[self.curPlayer].currentTileId == TILE_NONE:
+			if self.players[self.curPlayer].currentTileId == Tile.NONE:
 				self.players[self.curPlayer].currentTileId = self.tilepool.drawRandomTile()
 				self.selectedMoveIsReserveTile = False
 				self.selectedMoveTileId = self.players[self.curPlayer].currentTileId

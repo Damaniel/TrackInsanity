@@ -26,14 +26,14 @@ class SharedData:
 	cpuDelayTicks = None
 	
 	def __init__(self):
-		reset()
+		self.reset()
 		
 	def reset(self):
 		self.selectedPlayers = MIN_PLAYERS
-		playerState = []
-		playerState.append(Player.HUMAN)
+		self.playerState = []
+		self.playerState.append(Player.HUMAN)
 		for i in range(0, MAX_PLAYERS-1):
-			playerState.append(Player.COMPUTER)
-		exitGame = False
+			self.playerState.append(Player.COMPUTER)
+		self.exitGame = False
 		
 		
