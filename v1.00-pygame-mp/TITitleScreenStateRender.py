@@ -52,9 +52,11 @@ class TitleScreenStateRender(StateRender):
 		# The number of players selected on the 'New Game' screen
 		self.newGameSelectedPlayers = 2
 		
+		self.newGameOptionSelected = 0
+		
 		# When the last row of the new game menu is selected, this flag determines
 		# which of the two options is highlighted
-		self.newGameBeginSelected = False
+		self.newGameBeginSelected = True
 		
 		# Used to decide whether the 'Human' or 'CPU' option is selected for each player
 		self.isHumanSelected = [True, False, False, False, False, False]
@@ -125,6 +127,46 @@ class TitleScreenStateRender(StateRender):
 		self.windowSurfaceObj.blit(self.newGameHeader, RENDER_NEW_GAME_TITLE_POS)
 		self.windowSurfaceObj.blit(self.newGameInstructions, RENDER_NEW_GAME_INSTR_POS)
 		
+		# Depending on whether # of players is highlighed, draw the normal or highlighted version of the 
+		# text
+		if self.newGameOptionSelected == 0:
+			self.windowSurfaceObj.blit(self.numPlayersHighlight, RENDER_NEW_GAME_NUM_PLAYERS_POS)
+		else:
+			self.windowSurfaceObj.blit(self.numPlayers, RENDER_NEW_GAME_NUM_PLAYERS_POS)
+			
+		# Draw the options (2 - 6 players), highlighting the correct number
+		for i in range(2, MAX_PLAYERS + 1):
+			if self.newGameSelectedPlayers == i:
+				self.windowSurfaceObj.blit(self.digitsHighlight, RENDER_NEW_GAME_PLAYERS_DIGITS_POS[i-2], RENDER_OPTION_DIGIT_STRIP_POS[i])
+			else:
+				self.windowSurfaceObj.blit(self.digits, RENDER_NEW_GAME_PLAYERS_DIGITS_POS[i-2], RENDER_OPTION_DIGIT_STRIP_POS[i])
+		
+		# Draw the correct number of avatar boxes and accompanying option text
+		for i in range(0, self.newGameSelectedPlayers):
+			self.windowSurfaceObj.blit(self.avatarBoxes, RENDER_NEW_GAME_AVATAR_BOX_POS[i], RENDER_NEW_GAME_AVATAR_BOX_STRIP_POS[i])
+			if self.isHumanSelected[i] == True:
+				self.windowSurfaceObj.blit(self.humanHighlight, RENDER_NEW_GAME_HUMAN_POS[i])
+				self.windowSurfaceObj.blit(self.cpu, RENDER_NEW_GAME_CPU_POS[i])
+			else:
+				self.windowSurfaceObj.blit(self.human, RENDER_NEW_GAME_HUMAN_POS[i])
+				self.windowSurfaceObj.blit(self.cpuHighlight, RENDER_NEW_GAME_CPU_POS[i])
+				
+		# Draw a highlight around the appropriate player, if one of those is selected
+		if self.newGameOptionSelected >= 1 and self.newGameOptionSelected < 1 + self.newGameSelectedPlayers:
+			self.windowSurfaceObj.blit(self.avatarHighlight, RENDER_NEW_GAME_AVATAR_HI_POS[self.newGameOptionSelected - 1])
+			
+		# Finally, draw the back to title / begin game options (highlighted, if selected)
+		if self.newGameOptionSelected == 1 + self.newGameSelectedPlayers:
+			if self.newGameBeginSelected == True:
+				self.windowSurfaceObj.blit(self.beginGameHighlight, RENDER_NEW_GAME_BEGIN_POS)
+				self.windowSurfaceObj.blit(self.backToTitle, RENDER_NEW_GAME_BACK_POS)
+			else:
+				self.windowSurfaceObj.blit(self.beginGame, RENDER_NEW_GAME_BEGIN_POS)
+				self.windowSurfaceObj.blit(self.backToTitleHighlight, RENDER_NEW_GAME_BACK_POS)
+		else:
+			self.windowSurfaceObj.blit(self.beginGame, RENDER_NEW_GAME_BEGIN_POS)
+			self.windowSurfaceObj.blit(self.backToTitle, RENDER_NEW_GAME_BACK_POS)
+		
 	def drawOptionScreen(self):
 		# Draw the base object
 		self.windowSurfaceObj.blit(self.optionBase, RENDER_OPTION_BASE_POS)
@@ -173,7 +215,8 @@ class TitleScreenStateRender(StateRender):
 		self.highlightArrows = (pygame.image.load('res/title/arrowLeft.png').convert_alpha(), \
 								pygame.image.load('res/title/arrowRight.png').convert_alpha())
 
-		# Highlighted digits (used in a few places)
+		# Digits (used in a few places)
+		self.digits = pygame.image.load('res/title/digits.png').convert_alpha()		
 		self.digitsHighlight = pygame.image.load('res/title/digitsHighlight.png').convert_alpha()
 								
 		# Option screen components
@@ -205,6 +248,23 @@ class TitleScreenStateRender(StateRender):
 		
 		self.newGameHeader = pygame.image.load('res/title/newGame/newGameHeader.png').convert_alpha()
 		self.newGameInstructions = pygame.image.load('res/title/newGame/instructions.png').convert_alpha()
+		
+		self.numPlayers = pygame.image.load('res/title/newGame/numPlayers.png').convert_alpha()
+		self.numPlayersHighlight = pygame.image.load('res/title/newGame/numPlayersHighlight.png').convert_alpha()
+		
+		self.beginGame = pygame.image.load('res/title/newGame/beginGame.png').convert_alpha()
+		self.beginGameHighlight = pygame.image.load('res/title/newGame/beginGameHighlight.png').convert_alpha()
+		
+		self.backToTitle = pygame.image.load('res/title/newGame/backToTitle.png').convert_alpha()
+		self.backToTitleHighlight = pygame.image.load('res/title/newGame/backToTitleHighlight.png').convert_alpha()
+		
+		self.avatarBoxes = pygame.image.load('res/title/newGame/avatarBoxes.png').convert()
+		self.avatarHighlight = pygame.image.load('res/title/newGame/avatarHighlight.png').convert_alpha()
+		
+		self.human = pygame.image.load('res/title/newGame/human.png').convert_alpha()
+		self.humanHighlight = pygame.image.load('res/title/newGame/humanHighlight.png').convert_alpha()
+		self.cpu = pygame.image.load('res/title/newGame/cpu.png').convert_alpha()
+		self.cpuHighlight = pygame.image.load('res/title/newGame/cpuHighlight.png').convert_alpha()
 		
 		# Load the music for the title screen
 		#pygame.mixer.music.load('res/music/title.ogg')
@@ -332,7 +392,51 @@ class TitleScreenStateRender(StateRender):
 				#    X - selected a random avatar for the highlighted player
 				#    Enter, A, Start - Selectes Cancel or Begin, if highlighted.
 				elif self.renderSubstate == self.SUBSTATE_TITLE_NEW_GAME_SCREEN:
-					pass
+					if event.key == K_DOWN:
+						self.newGameOptionSelected += 1
+						if self.newGameOptionSelected > 1 + self.newGameSelectedPlayers:
+							self.newGameOptionSelected = 0
+					elif event.key == K_UP:
+						self.newGameOptionSelected -= 1
+						if self.newGameOptionSelected < 0:
+							self.newGameOptionSelected = 1 + self.newGameSelectedPlayers
+					elif event.key == K_RIGHT:
+						if self.newGameOptionSelected == 0:
+							self.newGameSelectedPlayers += 1
+							if self.newGameSelectedPlayers > 6:
+								self.newGameSelectedPlayers = 2
+						elif self.newGameOptionSelected >=1 and self.newGameOptionSelected < 1 + self.newGameSelectedPlayers:
+							if self.isHumanSelected[self.newGameOptionSelected - 1] == True:
+								self.isHumanSelected[self.newGameOptionSelected - 1] = False
+							else:
+								self.isHumanSelected[self.newGameOptionSelected - 1] = True
+						elif self.newGameOptionSelected == 1 + self.newGameSelectedPlayers:
+							if self.newGameBeginSelected == True:
+								self.newGameBeginSelected = False
+							else:
+								self.newGameBeginSelected = True
+					elif event.key == K_LEFT:
+						if self.newGameOptionSelected == 0:
+							self.newGameSelectedPlayers -= 1
+							if self.newGameSelectedPlayers < 2:
+								self.newGameSelectedPlayers = 6
+						elif self.newGameOptionSelected >=1 and self.newGameOptionSelected < 1 + self.newGameSelectedPlayers:
+							if self.isHumanSelected[self.newGameOptionSelected - 1] == True:
+								self.isHumanSelected[self.newGameOptionSelected - 1] = False
+							else:
+								self.isHumanSelected[self.newGameOptionSelected - 1] = True
+						elif self.newGameOptionSelected == 1 + self.newGameSelectedPlayers:
+							if self.newGameBeginSelected == True:
+								self.newGameBeginSelected = False
+							else:
+								self.newGameBeginSelected = True
+					elif event.key == K_RETURN:
+						if self.newGameOptionSelected == 1 + self.newGameSelectedPlayers:
+							if self.newGameBeginSelected == True:
+								pass
+							else:
+								self.prevRenderSubstate = self.renderSubstate
+								self.renderSubstate = self.SUBSTATE_TITLE_MENU_SCREEN
 				# On the options screen, the following keys work:
 				#    Up, Down - Move up or down the list of options
 				#    Left, Right - select between choices for the highlighted option
