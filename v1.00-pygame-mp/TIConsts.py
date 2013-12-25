@@ -63,7 +63,7 @@ RENDER_INSANITY_WORD_FINAL_X = 137
 RENDER_WORDS_Y = 31
 
 # Given a standard 30 frame per second update rate, the 
-# 'PRESS START' message should be shown from frames 0 to 21
+# 'PRESS START' message should be shown from frames 0 to 20
 # and the message hidden from frames 22-29.
 RENDER_PRESS_START_FRAME_SHOWN_TIME = 0
 RENDER_PRESS_START_FRAME_HIDDEN_TIME = 22
@@ -86,7 +86,6 @@ RENDER_TRAIN_BANNER_SPEED = 2
 
 RENDER_TITLE_COPYRIGHT_TEXT_X = 19
 RENDER_TITLE_COPYRIGHT_TEXT_Y = 193
-
 RENDER_TITLE_PRESS_START_X = 43
 RENDER_TITLE_PRESS_START_Y = 130
 
@@ -100,30 +99,38 @@ RENDER_TITLE_OPTION_QUIT_Y = 153
 RENDER_TITLE_OPTION_HIGHLIGHT_ARROW_LEFT_X = 86
 RENDER_TITLE_OPTION_HIGHLIGHT_ARROW_RIGHT_X = 225
 
-RENDER_OPTION_BASE_X = 0
-RENDER_OPTION_BASE_Y = 0
 
-RENDER_OPTION_TEXT_POSITIONS = ((14, 61), (14, 84), (14, 108), (13, 133), (13, 155), (13,178))
-RENDER_OPTION_HPT_POSITIONS =  ((220, 61), (280, 61))
-RENDER_OPTION_HLM_POSITIONS =  ((220, 84), (280, 84))
-RENDER_OPTION_SLM_POSITIONS =  ((166, 110), (220, 110), (281, 110))
-RENDER_OPTION_CAL_POSITIONS =  ((158, 134), (206, 131), (274, 131))
-RENDER_OPTION_MV_POSITIONS =   ((142, 155), (158, 155), (173, 155), (191, 155), (208, 155), (225, 155), (243, 155), (261, 155), (276, 155), (294, 155))
-RENDER_OPTION_EV_POSITIONS =   ((142, 178), (158, 178), (173, 178), (191, 178), (208, 178), (225, 178), (243, 178), (261, 178), (276, 178), (294, 178))
+RENDER_OPTION_BASE_POS = (0, 0)
+RENDER_OPTION_TEXT_POS = ((14, 61), (14, 84), (14, 108), (13, 133), (13, 155), (13,178))
+RENDER_OPTION_HPT_POS =  ((220, 61), (280, 61))
+RENDER_OPTION_HLM_POS =  ((220, 84), (280, 84))
+RENDER_OPTION_SLM_POS =  ((166, 110), (220, 110), (281, 110))
+RENDER_OPTION_CAL_POS =  ((158, 134), (206, 131), (274, 131))
+RENDER_OPTION_MV_POS =   ((142, 155), (158, 155), (173, 155), (191, 155), (208, 155), (225, 155), (243, 155), (261, 155), (276, 155), (294, 155))
+RENDER_OPTION_EV_POS =   ((142, 178), (158, 178), (173, 178), (191, 178), (208, 178), (225, 178), (243, 178), (261, 178), (276, 178), (294, 178))
 
-RENDER_OPTION_DIGIT_STRIP_POSITIONS = ((0, 0, 11, 15), \
-                                       (11, 0, 9, 15), \
-									   (20, 0, 12, 15), \
-									   (32, 0, 12, 15), \
-									   (44, 0, 11, 15), \
-									   (55, 0, 12, 15), \
-									   (67, 0, 12, 15), \
-									   (79, 0, 9, 15), \
-									   (88, 0, 11, 15), \
-									   (99, 0, 12, 15))
+RENDER_OPTION_DIGIT_STRIP_POS = ((0, 0, 11, 15), \
+                                 (11, 0, 9, 15), \
+							     (20, 0, 12, 15), \
+								 (32, 0, 12, 15), \
+								 (44, 0, 11, 15), \
+								 (55, 0, 12, 15), \
+								 (67, 0, 12, 15), \
+								 (79, 0, 9, 15), \
+								 (88, 0, 11, 15), \
+								 (99, 0, 12, 15))
 									   
-RENDER_OPTION_OK_X = 99
-RENDER_OPTION_OK_Y = 203
+RENDER_OPTION_OK_POS = (99, 203)
+RENDER_OPTION_CANCEL_POS = (188, 203)
 
-RENDER_OPTION_CANCEL_X = 188
-RENDER_OPTION_CANCEL_Y = 203
+# Displayable options on the 'New Game' (local mode) screen
+RENDER_NEW_GAME_TITLE_POS = (101, 23)
+RENDER_NEW_GAME_NUM_PLAYERS_POS = (22, 54)
+RENDER_NEW_GAME_PLAYERS_DIGITS_POS = ((183, 55), (207, 55), (232, 55), (256, 55), (281, 55))
+RENDER_NEW_GAME_AVATAR_POS = ((18, 79), (175, 79), (18, 111), (175, 111), (18, 143), (175, 143))
+RENDER_NEW_GAME_AVATAR_HI_POS = ((15, 76), (172, 76), (15, 108), (172, 108), (15, 140), (172, 140))
+RENDER_NEW_GAME_HUMAN_POS = ((53, 81), (210, 81), (53, 113), (210, 113), (53, 145), (210, 145))
+RENDER_NEW_GAME_CPU_POS = ((120, 81), (277, 81), (120, 113), (277, 113), (120, 145), (277, 145))
+RENDER_NEW_GAME_INSTR_POS = (9, 175)
+RENDER_NEW_GAME_BACK_POS = (45, 203)
+RENDER_NEW_GAME_BEGIN_POS = (190, 204)

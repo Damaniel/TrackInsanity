@@ -46,8 +46,21 @@ class TitleScreenStateRender(StateRender):
 		# self.defaultOption holds a clean copy of the defaults, so they can be
 		# restored after cancelling (selectedOption holds a live copy of the values
 		# as they are being updated by the user).
-		self.selectedOption = [0, 0, 1, 1, 5, 5]
-		self.defaultOption  = [0, 0, 1, 1, 5, 5]
+		self.selectedOption = [0, 0, 1, 1, 9, 9]
+		self.defaultOption  = [0, 0, 1, 1, 9, 9]
+		
+		# The number of players selected on the 'New Game' screen
+		self.newGameSelectedPlayers = 2
+		
+		# When the last row of the new game menu is selected, this flag determines
+		# which of the two options is highlighted
+		self.newGameBeginSelected = False
+		
+		# Used to decide whether the 'Human' or 'CPU' option is selected for each player
+		self.isHumanSelected = [True, False, False, False, False, False]
+		
+		# Default avatar indices for each player.  There are 256 total avatars (0-255)
+		self.playerAvatars = [0, 1, 2, 3, 4, 5]
 		
 		#
 		# These substates are used to determine what components of the title/option screen to show
@@ -86,6 +99,10 @@ class TitleScreenStateRender(StateRender):
 	# and the moving trains.  Eventually, this function may draw the background
 	# image up to two times, depending on if the background is scrolling or not.
 	#
+	# Since the background image takes up the entire screen and is updated every
+	# frame, the only dirty rectangle generated in this class can be found in this
+	# function (and it consumes the entire screen)
+	#
 	def renderTitleScreenDrawBase(self):
 		r = self.windowSurfaceObj.blit(self.emptyTitleBG, (0, 0))
 		self.dirtyRects.append(r)
@@ -98,17 +115,19 @@ class TitleScreenStateRender(StateRender):
 		self.windowSurfaceObj.blit(self.trainBannerBottom, (self.bottomTrainX, RENDER_TRAIN_BANNER_BOTTOM_Y))
 		return
 		
-	def drawTitleInfo(self, offset):
-		r = self.windowSurfaceObj.blit(self.trackWord, (RENDER_TRACK_WORD_FINAL_X + offset, RENDER_WORDS_Y))
-		self.dirtyRects.append(r)
-		r = self.windowSurfaceObj.blit(self.insanityWord, (RENDER_INSANITY_WORD_FINAL_X + offset, RENDER_WORDS_Y))
-		self.dirtyRects.append(r)
-		r = self.windowSurfaceObj.blit(self.copyrightText, (RENDER_TITLE_COPYRIGHT_TEXT_X + offset, RENDER_TITLE_COPYRIGHT_TEXT_Y))
-		self.dirtyRects.append(r)
+	def drawTitleInfo(self):
+		self.windowSurfaceObj.blit(self.trackWord, (RENDER_TRACK_WORD_FINAL_X, RENDER_WORDS_Y))
+		self.windowSurfaceObj.blit(self.insanityWord, (RENDER_INSANITY_WORD_FINAL_X, RENDER_WORDS_Y))
+		self.windowSurfaceObj.blit(self.copyrightText, (RENDER_TITLE_COPYRIGHT_TEXT_X, RENDER_TITLE_COPYRIGHT_TEXT_Y))
+		
+	def drawNewGameScreen(self):
+		# Draw the header and instructions, since these are always fixed:
+		self.windowSurfaceObj.blit(self.newGameHeader, RENDER_NEW_GAME_TITLE_POS)
+		self.windowSurfaceObj.blit(self.newGameInstructions, RENDER_NEW_GAME_INSTR_POS)
 		
 	def drawOptionScreen(self):
 		# Draw the base object
-		self.windowSurfaceObj.blit(self.optionBase, (RENDER_OPTION_BASE_X, RENDER_OPTION_BASE_Y))
+		self.windowSurfaceObj.blit(self.optionBase, RENDER_OPTION_BASE_POS)
 		
 		#
 		# Check to see which option is highlighted, and draw the highlight over that option.
@@ -116,23 +135,23 @@ class TitleScreenStateRender(StateRender):
 		# (NUM_OPTIONS) is special, and allows the control of the 'OK/Cancel' buttons.
 		#
 		if self.optionMenuOptionSelected >=0 and self.optionMenuOptionSelected < self.NUM_OPTIONS:
-			self.windowSurfaceObj.blit(self.optionNames[self.optionMenuOptionSelected], RENDER_OPTION_TEXT_POSITIONS[self.optionMenuOptionSelected])
+			self.windowSurfaceObj.blit(self.optionNames[self.optionMenuOptionSelected], RENDER_OPTION_TEXT_POS[self.optionMenuOptionSelected])
 		elif self.optionMenuOptionSelected == self.NUM_OPTIONS:
 			if self.optionMenuOkSelected == True:
-				self.windowSurfaceObj.blit(self.okHighlight, (RENDER_OPTION_OK_X, RENDER_OPTION_OK_Y))
+				self.windowSurfaceObj.blit(self.okHighlight, RENDER_OPTION_OK_POS)
 			else:
-				self.windowSurfaceObj.blit(self.cancelHighlight, (RENDER_OPTION_CANCEL_X, RENDER_OPTION_CANCEL_Y))
+				self.windowSurfaceObj.blit(self.cancelHighlight, RENDER_OPTION_CANCEL_POS)
 				
 		# For each of the options, check to see which value is highlighted, and highlight only that value. 
-		self.windowSurfaceObj.blit(self.optionHighlights[0][self.selectedOption[0]], RENDER_OPTION_HPT_POSITIONS[self.selectedOption[0]])
-		self.windowSurfaceObj.blit(self.optionHighlights[1][self.selectedOption[1]], RENDER_OPTION_HLM_POSITIONS[self.selectedOption[1]])
-		self.windowSurfaceObj.blit(self.optionHighlights[2][self.selectedOption[2]], RENDER_OPTION_SLM_POSITIONS[self.selectedOption[2]])
-		self.windowSurfaceObj.blit(self.optionHighlights[3][self.selectedOption[3]], RENDER_OPTION_CAL_POSITIONS[self.selectedOption[3]])
+		self.windowSurfaceObj.blit(self.optionHighlights[0][self.selectedOption[0]], RENDER_OPTION_HPT_POS[self.selectedOption[0]])
+		self.windowSurfaceObj.blit(self.optionHighlights[1][self.selectedOption[1]], RENDER_OPTION_HLM_POS[self.selectedOption[1]])
+		self.windowSurfaceObj.blit(self.optionHighlights[2][self.selectedOption[2]], RENDER_OPTION_SLM_POS[self.selectedOption[2]])
+		self.windowSurfaceObj.blit(self.optionHighlights[3][self.selectedOption[3]], RENDER_OPTION_CAL_POS[self.selectedOption[3]])
 		
 		# Do the same for the last two options (which need to do a lookup into a couple of offset tables since the
 		# digits are all stored together
-		self.windowSurfaceObj.blit(self.digitsHighlight, RENDER_OPTION_MV_POSITIONS[self.selectedOption[4]], RENDER_OPTION_DIGIT_STRIP_POSITIONS[self.selectedOption[4]])
-		self.windowSurfaceObj.blit(self.digitsHighlight, RENDER_OPTION_EV_POSITIONS[self.selectedOption[5]], RENDER_OPTION_DIGIT_STRIP_POSITIONS[self.selectedOption[5]])
+		self.windowSurfaceObj.blit(self.digitsHighlight, RENDER_OPTION_MV_POS[self.selectedOption[4]], RENDER_OPTION_DIGIT_STRIP_POS[self.selectedOption[4]])
+		self.windowSurfaceObj.blit(self.digitsHighlight, RENDER_OPTION_EV_POS[self.selectedOption[5]], RENDER_OPTION_DIGIT_STRIP_POS[self.selectedOption[5]])
 		
 	def loadAssets(self):
 		# Company logo and title screen assets
@@ -153,7 +172,10 @@ class TitleScreenStateRender(StateRender):
 		                    pygame.image.load('res/title/quitHighlight.png').convert_alpha())
 		self.highlightArrows = (pygame.image.load('res/title/arrowLeft.png').convert_alpha(), \
 								pygame.image.load('res/title/arrowRight.png').convert_alpha())
-		
+
+		# Highlighted digits (used in a few places)
+		self.digitsHighlight = pygame.image.load('res/title/digitsHighlight.png').convert_alpha()
+								
 		# Option screen components
 		self.optionBase = pygame.image.load('res/title/options/textBase.png').convert_alpha()
 		
@@ -172,7 +194,6 @@ class TitleScreenStateRender(StateRender):
 		self.easyHighlight = pygame.image.load('res/title/options/easyHighlight.png').convert_alpha()
 		self.mediumHighlight = pygame.image.load('res/title/options/mediumHighlight.png').convert_alpha()
 		self.hardHighlight = pygame.image.load('res/title/options/hardHighlight.png').convert_alpha()
-		self.digitsHighlight = pygame.image.load('res/title/options/digitsHighlight.png').convert_alpha()
 	
 		self.optionHighlights = ((self.yesHighlight, self.noHighlight), \
 								 (self.yesHighlight, self.noHighlight), \
@@ -182,12 +203,21 @@ class TitleScreenStateRender(StateRender):
 		self.okHighlight = pygame.image.load('res/title/options/okHighlight.png').convert_alpha()
 		self.cancelHighlight = pygame.image.load('res/title/options/cancelHighlight.png').convert_alpha()
 		
+		self.newGameHeader = pygame.image.load('res/title/newGame/newGameHeader.png').convert_alpha()
+		self.newGameInstructions = pygame.image.load('res/title/newGame/instructions.png').convert_alpha()
+		
+		# Load the music for the title screen
+		#pygame.mixer.music.load('res/music/title.ogg')
+		
 	def initRenderState(self):
 		self.topTrainX = RENDER_TRAIN_BANNER_INITIAL_X
 		self.topTrainDirection = RENDER_TRAIN_DIR_RIGHT
 		self.bottomTrainX = RENDER_TRAIN_BANNER_FINAL_X
 		self.bottomTrainY = RENDER_TRAIN_DIR_LEFT
 		self.frameCount = 0
+		# Set the music volume and play the background song on loop.
+		#pygame.mixer.music.set_volume(1.0)
+		#pygame.mixer.music.play(-1)
 		return	
 		
 	def updateLogic(self):
@@ -220,7 +250,7 @@ class TitleScreenStateRender(StateRender):
 		
 		if self.renderSubstate == self.SUBSTATE_TITLE_SCREEN or self.renderSubstate == self.SUBSTATE_TITLE_MENU_SCREEN:
 			# If on the title screen or the title menu, display the game name and copyright information.
-			self.drawTitleInfo(0)
+			self.drawTitleInfo()
 		
 		if self.renderSubstate == self.SUBSTATE_TITLE_SCREEN:
 			# On the title screen *only*, display a 'Press Start' message that flashes (by only being shown 75% of the frames)
@@ -253,6 +283,9 @@ class TitleScreenStateRender(StateRender):
 				
 		if self.renderSubstate == self.SUBSTATE_TITLE_OPTIONS_SCREEN:
 			self.drawOptionScreen()
+		
+		if self.renderSubstate == self.SUBSTATE_TITLE_NEW_GAME_SCREEN:
+			self.drawNewGameScreen()
 			
 		return
 		
@@ -284,11 +317,22 @@ class TitleScreenStateRender(StateRender):
 						if self.titleMenuOptionSelected < 0:
 							self.titleMenuOptionSelected = self.NUM_TITLE_MENU_OPTIONS - 1
 					elif event.key == K_RETURN:
-						if self.titleMenuOptionSelected == self.TITLE_MENU_OPTION_OPTIONS:
+						if self.titleMenuOptionSelected == self.TITLE_MENU_OPTION_NEW_GAME:
+							self.prevRenderSubstate = self.renderSubstate
+							self.renderSubstate = self.SUBSTATE_TITLE_NEW_GAME_SCREEN
+						elif self.titleMenuOptionSelected == self.TITLE_MENU_OPTION_OPTIONS:
 							self.prevRenderSubstate = self.renderSubstate
 							self.renderSubstate = self.SUBSTATE_TITLE_OPTIONS_SCREEN
 						elif self.titleMenuOptionSelected == self.TITLE_MENU_OPTION_QUIT:
 							pygame.event.post(pygame.event.Event(QUIT))
+				# On the new game screen, the following keys work:
+				#    Up, Down - Move through the (up to 6) players, or 'Cancel/Begin'
+				#    Left, Right - pick CPU or Human, or 'Cancel/Begin'
+				#    L, R - select the previous or next avatar for the highlighted player
+				#    X - selected a random avatar for the highlighted player
+				#    Enter, A, Start - Selectes Cancel or Begin, if highlighted.
+				elif self.renderSubstate == self.SUBSTATE_TITLE_NEW_GAME_SCREEN:
+					pass
 				# On the options screen, the following keys work:
 				#    Up, Down - Move up or down the list of options
 				#    Left, Right - select between choices for the highlighted option
@@ -338,7 +382,7 @@ class TitleScreenStateRender(StateRender):
 							else:
 								self.prevRenderSubstate = self.renderSubstate
 								self.renderSubstate = self.SUBSTATE_TITLE_MENU_SCREEN
-								
+
 				if event.key == K_ESCAPE:
 					pygame.event.post(pygame.event.Event(QUIT))
 					return
