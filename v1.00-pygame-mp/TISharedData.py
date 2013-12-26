@@ -18,6 +18,8 @@ class SharedData:
 	exitGame = None
 	selectedPlayers = None
 	playerState = None
+	playerAvatars = None
+	selectedOption = None
 	
 	# AI move packets
 	currentMove = None
@@ -29,11 +31,19 @@ class SharedData:
 		self.reset()
 		
 	def reset(self):
-		self.selectedPlayers = MIN_PLAYERS
-		self.playerState = []
-		self.playerState.append(Player.HUMAN)
+		SharedData.selectedPlayers = MIN_PLAYERS
+		SharedData.playerState = []
+		SharedData.playerState.append(Player.HUMAN)
 		for i in range(0, MAX_PLAYERS-1):
-			self.playerState.append(Player.COMPUTER)
-		self.exitGame = False
+			SharedData.playerState.append(Player.COMPUTER)
+			
+		# These are the selected avatars for each player.
+		SharedData.playerAvatars = [0, 1, 2, 3, 4, 5]
+		
+		# These are the selected options from the user, or will be when they get
+		# updated by the UI.
+		SharedData.selectedOption = [0, 0, 1, 1, 9, 9]
+		
+		SharedData.exitGame = False
 		
 		

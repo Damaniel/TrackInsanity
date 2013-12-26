@@ -6,6 +6,7 @@ from TIConsts import *
 from TIStateRender import StateRender
 from TICompanyLogoStateRender import CompanyLogoStateRender
 from TITitleScreenStateRender import TitleScreenStateRender
+from TIInGameStateRender import InGameStateRender
 
 class Render:
 
@@ -34,7 +35,10 @@ class Render:
 		if newState == RENDER_STATE_TITLE_SCREEN:
 			Render.currentRenderState = RENDER_STATE_TITLE_SCREEN
 			Render.crs = TitleScreenStateRender(Render.windowSurfaceObj)
-	
+		if newState == RENDER_STATE_IN_GAME:
+			Render.currentRenderState = RENDER_STATE_IN_GAME
+			Render.crs = InGameStateRender(Render.windowSurfaceObj)
+			
 	@staticmethod
 	def updateRenderLogic():
 		Render.crs.updateLogic()
@@ -64,3 +68,5 @@ class Render:
 	@staticmethod
 	def processInputs():
 		Render.crs.processInputs()
+		
+	

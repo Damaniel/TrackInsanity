@@ -54,3 +54,7 @@ class Player:
 		# Clear the 'last move' positions.
 		self.lastMoveX = self.INVALID_LAST_MOVE
 		self.lastMoveY = self.INVALID_LAST_MOVE
+		
+		# The avatar ID for this player.
+		self.avatarId = 0
+		

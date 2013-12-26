@@ -1,9 +1,11 @@
 #! /usr/bin/env python
 
-import pygame, sys
+import pygame, sys, random
 from pygame.locals import *
 from TIConsts import *
 from TIStateRender import StateRender
+from TISharedData import *
+from TIPlayer import Player
 
 class TitleScreenStateRender(StateRender):
 	
@@ -141,9 +143,14 @@ class TitleScreenStateRender(StateRender):
 			else:
 				self.windowSurfaceObj.blit(self.digits, RENDER_NEW_GAME_PLAYERS_DIGITS_POS[i-2], RENDER_OPTION_DIGIT_STRIP_POS[i])
 		
-		# Draw the correct number of avatar boxes and accompanying option text
+		# Draw the correct number of avatar boxes and accompanying option text.
+		# Draw the correct avatars, too.
 		for i in range(0, self.newGameSelectedPlayers):
+			avatarX = 16 * (self.playerAvatars[i] - (int(self.playerAvatars[i] / 16) * 16))
+			avatarY = 16 * int(self.playerAvatars[i] / 16)
 			self.windowSurfaceObj.blit(self.avatarBoxes, RENDER_NEW_GAME_AVATAR_BOX_POS[i], RENDER_NEW_GAME_AVATAR_BOX_STRIP_POS[i])
+			self.windowSurfaceObj.blit(self.avatars, (RENDER_NEW_GAME_AVATAR_BOX_POS[i][0] + 1, RENDER_NEW_GAME_AVATAR_BOX_POS[i][1] + 1), (avatarX, avatarY, 16, 16))
+			
 			if self.isHumanSelected[i] == True:
 				self.windowSurfaceObj.blit(self.humanHighlight, RENDER_NEW_GAME_HUMAN_POS[i])
 				self.windowSurfaceObj.blit(self.cpu, RENDER_NEW_GAME_CPU_POS[i])
@@ -261,6 +268,9 @@ class TitleScreenStateRender(StateRender):
 		self.avatarBoxes = pygame.image.load('res/title/newGame/avatarBoxes.png').convert()
 		self.avatarHighlight = pygame.image.load('res/title/newGame/avatarHighlight.png').convert_alpha()
 		
+		# The avatars themselves
+		self.avatars = pygame.image.load('res/common/avatars.png').convert_alpha()
+		
 		self.human = pygame.image.load('res/title/newGame/human.png').convert_alpha()
 		self.humanHighlight = pygame.image.load('res/title/newGame/humanHighlight.png').convert_alpha()
 		self.cpu = pygame.image.load('res/title/newGame/cpu.png').convert_alpha()
@@ -360,7 +370,7 @@ class TitleScreenStateRender(StateRender):
 				# On the title screen, the following keys work:
 				#    Enter, A, Start - display the title menu
 				if self.renderSubstate == self.SUBSTATE_TITLE_SCREEN:					
-					if event.key == K_RETURN:
+					if event.key in (K_RETURN, K_LCTRL):
 						self.prevRenderSubstate = self.SUBSTATE_TITLE_SCREEN
 						self.renderSubstate = self.SUBSTATE_TITLE_MENU_SCREEN	
 				# On the title menu screen, the following keys work:
@@ -376,7 +386,7 @@ class TitleScreenStateRender(StateRender):
 						self.titleMenuOptionSelected -= 1
 						if self.titleMenuOptionSelected < 0:
 							self.titleMenuOptionSelected = self.NUM_TITLE_MENU_OPTIONS - 1
-					elif event.key == K_RETURN:
+					elif event.key in (K_RETURN, K_LCTRL):
 						if self.titleMenuOptionSelected == self.TITLE_MENU_OPTION_NEW_GAME:
 							self.prevRenderSubstate = self.renderSubstate
 							self.renderSubstate = self.SUBSTATE_TITLE_NEW_GAME_SCREEN
@@ -393,11 +403,11 @@ class TitleScreenStateRender(StateRender):
 				#    Enter, A, Start - Selectes Cancel or Begin, if highlighted.
 				elif self.renderSubstate == self.SUBSTATE_TITLE_NEW_GAME_SCREEN:
 					if event.key == K_DOWN:
-						self.newGameOptionSelected += 1
+						self.newGameOptionSelected += 1						
 						if self.newGameOptionSelected > 1 + self.newGameSelectedPlayers:
 							self.newGameOptionSelected = 0
 					elif event.key == K_UP:
-						self.newGameOptionSelected -= 1
+						self.newGameOptionSelected -= 1					
 						if self.newGameOptionSelected < 0:
 							self.newGameOptionSelected = 1 + self.newGameSelectedPlayers
 					elif event.key == K_RIGHT:
@@ -410,7 +420,7 @@ class TitleScreenStateRender(StateRender):
 								self.isHumanSelected[self.newGameOptionSelected - 1] = False
 							else:
 								self.isHumanSelected[self.newGameOptionSelected - 1] = True
-						elif self.newGameOptionSelected == 1 + self.newGameSelectedPlayers:
+						elif self.newGameOptionSelected >= 1 + self.newGameSelectedPlayers:
 							if self.newGameBeginSelected == True:
 								self.newGameBeginSelected = False
 							else:
@@ -425,15 +435,42 @@ class TitleScreenStateRender(StateRender):
 								self.isHumanSelected[self.newGameOptionSelected - 1] = False
 							else:
 								self.isHumanSelected[self.newGameOptionSelected - 1] = True
-						elif self.newGameOptionSelected == 1 + self.newGameSelectedPlayers:
+						elif self.newGameOptionSelected >= 1 + self.newGameSelectedPlayers:
 							if self.newGameBeginSelected == True:
 								self.newGameBeginSelected = False
 							else:
 								self.newGameBeginSelected = True
-					elif event.key == K_RETURN:
+					elif event.key in (K_x, K_SPACE):
+						if self.newGameOptionSelected >=1 and self.newGameOptionSelected < 1 + self.newGameSelectedPlayers:
+							self.playerAvatars[self.newGameOptionSelected - 1] = random.randint(0, 255)
+					elif event.key in (K_l, K_TAB):
+						if self.newGameOptionSelected >=1 and self.newGameOptionSelected < 1 + self.newGameSelectedPlayers:
+							self.playerAvatars[self.newGameOptionSelected - 1] -= 1
+							if self.playerAvatars[self.newGameOptionSelected - 1] < 0:
+								self.playerAvatars[self.newGameOptionSelected - 1] = 255
+					elif event.key in (K_r, K_BACKSPACE):
+						if self.newGameOptionSelected >=1 and self.newGameOptionSelected < 1 + self.newGameSelectedPlayers:
+							self.playerAvatars[self.newGameOptionSelected - 1] += 1
+							if self.playerAvatars[self.newGameOptionSelected - 1] > 255:
+								self.playerAvatars[self.newGameOptionSelected - 1] = 0				
+					elif event.key in (K_RETURN, K_LCTRL):
 						if self.newGameOptionSelected == 1 + self.newGameSelectedPlayers:
 							if self.newGameBeginSelected == True:
-								pass
+								# Populate the shared data structure with values set by the user, 
+								# then change the target state to 'begin game'.  The game instance
+								# created in that state will set all values as necessary.
+								SharedData.selectedPlayers = self.newGameSelectedPlayers
+								SharedData.playerState = []
+								for i in range(0, self.newGameSelectedPlayers):
+									if self.isHumanSelected[i] == True:
+										SharedData.playerState.append(Player.HUMAN)					
+									else:
+										SharedData.playerState.append(Player.COMPUTER)
+								SharedData.playerAvatars = []
+								for i in range(0, self.newGameSelectedPlayers):
+									SharedData.playerAvatars.append(self.playerAvatars[i])
+								SharedData.selectedOption = self.selectedOption								
+								self.targetState = RENDER_STATE_IN_GAME
 							else:
 								self.prevRenderSubstate = self.renderSubstate
 								self.renderSubstate = self.SUBSTATE_TITLE_MENU_SCREEN
@@ -476,14 +513,20 @@ class TitleScreenStateRender(StateRender):
 								self.optionMenuOkSelected = False
 							else:
 								self.optionMenuOkSelected = True	
-					elif event.key == K_RETURN:
+					elif event.key in (K_RETURN, K_LCTRL):
 						# If the cursor is on OK or Cancel, determine which one, and either apply the current
 						# settings to the game, or revert to the previous ones.
 						if self.optionMenuOptionSelected == self.NUM_OPTIONS:
 							if self.optionMenuOkSelected == True:
+								# Make the selected options the default ones now.
+								for i in range(0, self.NUM_OPTIONS):
+									self.defaultOption[i] = self.selectedOption[i]
 								self.prevRenderSubstate = self.renderSubstate
 								self.renderSubstate = self.SUBSTATE_TITLE_MENU_SCREEN
 							else:
+								# Revert all settings to their default values
+								for i in range(0, self.NUM_OPTIONS):
+									self.selectedOption[i] = self.defaultOption[i]
 								self.prevRenderSubstate = self.renderSubstate
 								self.renderSubstate = self.SUBSTATE_TITLE_MENU_SCREEN
 

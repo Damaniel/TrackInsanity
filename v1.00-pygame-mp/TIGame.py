@@ -43,12 +43,14 @@ class Game:
 	
 	CPU_MIN_THINK_TIME = 1200
 	CPU_MAX_THINK_TIME = 2200
+
+	OPTION_YES = 0	
+	OPTION_NO = 1
 	
-	OPTION_NO = 0
-	OPTION_YES = 1
+	OPTION_HIGHLIGHT_NONE = 0
+	OPTION_HIGHLIGHT_LAST_PLAYER = 1
+	OPTION_HIGHLIGHT_ALL_PLAYERS = 2
 	
-	OPTION_HIGHLIGHT_LAST_PLAYER = 2
-	OPTION_HIGHLIGHT_ALL_PLAYERS = 3
 	OPTION_AI_EASY = 0
 	OPTION_AI_MEDIUM = 1
 	OPTION_AI_HARD = 2
@@ -61,15 +63,8 @@ class Game:
 		self.highlightTracks = self.OPTION_YES
 		self.highlightLegalMoves = self.OPTION_YES
 		self.showLastMove = self.OPTION_HIGHLIGHT_ALL_PLAYERS
-		self.defaultAILevel = self.OPTION_AI_MEDIUM
 		self.musicVolume = 4
 		self.effectsVolume = 4
-		
-		self.tmpHighlightTracks = self.OPTION_YES
-		self.tmpHighlightLegalMoves = self.OPTION_YES
-		self.tmpDefaultAILevel = self.OPTION_AI_MEDIUM
-		self.tmpMusicVolume = 4
-		self.tmpEffectsVolume = 4
 		
 		# Creates the local variables that will be used in reset() later
 		self.numPlayers = None
@@ -112,29 +107,43 @@ class Game:
 		if SharedData.selectedPlayers < MIN_PLAYERS or SharedData.selectedPlayers > MAX_PLAYERS:
 			print "initPlayersFromUi: Invalid number of players selected"
 			return False
-			
-		if self.defaultAILevel == self.OPTION_AI_EASY:
-			aiLevel = Player.AI_DEFAULT
-		elif self.defaultAILevel == self.OPTION_AI_MEDIUM:
-			aiLevel = Player.AI_SMARTER
-		else:
-			aiLevel = Player.AI_SMARTEST
-			
+		
+		# Set the AI level
+		aiLevel = SharedData.selectedOption[OPTION_COMPUTER_AI_LEVEL]
+		
+		# Create new players of each kind
 		for i in range(0, SharedData.selectedPlayers):
 			self.players.append(Player(SharedData.playerState[i], 0, aiLevel))
 			
+		# Create 'nobody' place holders for all non-playing characters
 		for i in range(0, MAX_PLAYERS - SharedData.selectedPlayers):
 			self.players.append(Player(Player.NOBODY, 0, aiLevel))
-			
-		self.numStationsPerPlayer = int(Board.NUM_STATIONS / SharedData.selectedPlayers)
-		self.numPlayers = SharedData.selectedPlayers
 		
+		# Set each player's avatar ID
+		for i in range(0, SharedData.selectedPlayers):
+			self.players[i].avatarId = SharedData.playerAvatars[i]
+
+		# Figure out the number of stations that each player receives in this game
+		self.numStationsPerPlayer = int(Board.NUM_STATIONS / SharedData.selectedPlayers)
+		
+		# Set the number of players for this game instance, and set the current player
+		# to player 1
+		self.numPlayers = SharedData.selectedPlayers
 		self.curPlayer = 0
 		
+		# Assign player trains to stations depending on the number of players in this game.
 		for i in range(0, Board.NUM_STATIONS):
 			(stationX, stationY, stationExit) = self.board.getStationInfo(i)
 			self.board.b[stationX][stationY].trainPresent = Board.BOARD_STATION_DATA[self.numPlayers][i]
-			
+				
+		# Set the rest of the options from the UI
+		self.highlightTracks = SharedData.selectedOption[OPTION_HIGHLIGHT_PLAYER_TRACKS]
+		self.highlightLegalMoves = SharedData.selectedOption[OPTION_HIGHLIGHT_LEGAL_MOVES]
+		self.showLastMove = SharedData.selectedOption[OPTION_SHOW_LAST_MOVE]
+		self.musicVolume = SharedData.selectedOption[OPTION_MUSIC_VOLUME]
+		self.effectsVolume = SharedData.selectedOption[OPTION_EFFECTS_VOLUME]
+		
+	
 	def changeState(self, state):
 		if state == self.GAME_STATE_DEFAULT:
 			return True
