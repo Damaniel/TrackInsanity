@@ -148,7 +148,7 @@ class TitleScreenStateRender(StateRender):
 		for i in range(0, self.newGameSelectedPlayers):
 			avatarX = 16 * (self.playerAvatars[i] - (int(self.playerAvatars[i] / 16) * 16))
 			avatarY = 16 * int(self.playerAvatars[i] / 16)
-			self.windowSurfaceObj.blit(self.avatarBoxes, RENDER_NEW_GAME_AVATAR_BOX_POS[i], RENDER_NEW_GAME_AVATAR_BOX_STRIP_POS[i])
+			self.windowSurfaceObj.blit(self.avatarBoxes, RENDER_NEW_GAME_AVATAR_BOX_POS[i], RENDER_AVATAR_BOX_STRIP_POS[i])
 			self.windowSurfaceObj.blit(self.avatars, (RENDER_NEW_GAME_AVATAR_BOX_POS[i][0] + 1, RENDER_NEW_GAME_AVATAR_BOX_POS[i][1] + 1), (avatarX, avatarY, 16, 16))
 			
 			if self.isHumanSelected[i] == True:
@@ -265,8 +265,8 @@ class TitleScreenStateRender(StateRender):
 		self.backToTitle = pygame.image.load('res/title/newGame/backToTitle.png').convert_alpha()
 		self.backToTitleHighlight = pygame.image.load('res/title/newGame/backToTitleHighlight.png').convert_alpha()
 		
-		self.avatarBoxes = pygame.image.load('res/title/newGame/avatarBoxes.png').convert()
-		self.avatarHighlight = pygame.image.load('res/title/newGame/avatarHighlight.png').convert_alpha()
+		self.avatarBoxes = pygame.image.load('res/common/avatarBoxes.png').convert()
+		self.avatarHighlight = pygame.image.load('res/common/avatarHighlight.png').convert_alpha()
 		
 		# The avatars themselves
 		self.avatars = pygame.image.load('res/common/avatars.png').convert_alpha()

@@ -143,10 +143,30 @@ RENDER_NEW_GAME_INSTR_POS = (9, 175)
 RENDER_NEW_GAME_BACK_POS = (190, 204)
 RENDER_NEW_GAME_BEGIN_POS = (45, 203)
 
-RENDER_NEW_GAME_AVATAR_BOX_STRIP_POS = ((0, 0, 18, 18), \
-										(18, 0, 18, 18), \
-										(36, 0, 18, 18), \
-										(54, 0, 18, 18), \
-										(72, 0, 18, 18), \
-										(90, 0, 18, 18), \
-										(108, 0, 18, 18))
+RENDER_AVATAR_BOX_STRIP_POS = ((0, 0, 18, 18), \
+								(18, 0, 18, 18), \
+								(36, 0, 18, 18), \
+								(54, 0, 18, 18), \
+								(72, 0, 18, 18), \
+								(90, 0, 18, 18), \
+								(108, 0, 18, 18))
+
+RENDER_IN_GAME_PLAYER_DIALOG_BOX_POS = (10, 11)
+RENDER_IN_GAME_PLAYER_DIALOG_BOX_SIZE = (70, 218)
+RENDER_IN_GAME_PLAYER_HIGHLIGHT_POS  = ((8, 11), (8, 47), (8, 83), (8, 119), (8, 155), (8, 191))
+
+RENDER_IN_GAME_TILE_ICON_SIZE = 11
+RENDER_IN_GAME_TILE_ICON_BG_RECT = (275, 0, 11, 11)
+
+# Note that these coordinates are relative to the upper left corner of the inside of the player dialog
+# box (and not the screen)!  This is because the player dialog is assembled on a separate surface from
+# the screen, and blitted in one shot only when it changes.										
+RENDER_IN_GAME_PLAYER_AVATAR_BOX_POS = ((1, 3), (1, 39), (1, 75), (1, 111), (1, 147), (1, 183))
+RENDER_IN_GAME_PLAYER_AVATAR_POS     = ((2, 4), (2, 40), (2, 76), (2, 112), (2, 148), (2, 184))
+RENDER_IN_GAME_PLAYER_NAME_POS = ((21, 4), (21, 40), (21, 76), (21, 112), (21, 148), (21, 184))
+RENDER_IN_GAME_PLAYER_SCORE_TEXT_POS = ((21, 13), (21, 49), (21, 85), (21, 121), (21, 157), (21, 193))
+RENDER_IN_GAME_PLAYER_SCORE_POS = ((49, 13), (49, 49), (49, 85), (49, 121), (49, 157), (49, 193))
+RENDER_IN_GAME_PLAYER_STATION_TILE_BOX_POS = ((2, 23), (2, 59), (2, 95), (2, 131), (2, 167), (2, 203))
+RENDER_IN_GAME_PLAYER_HELD_PRIMARY_POS = ((39, 24), (39, 60), (39, 96), (39, 132), (39, 168), (39, 204))
+RENDER_IN_GAME_PLAYER_HELD_SECONDARY_POS = ((55, 24), (55, 60), (55, 96), (55, 132), (55, 168), (55, 204))
+RENDER_IN_GAME_PLAYER_DIALOG_POS = ((82, 11), (82, 47), (82, 83), (82, 119), (82, 155), (82, 191))
