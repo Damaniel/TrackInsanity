@@ -158,14 +158,20 @@ RENDER_IN_GAME_PLAYER_HIGHLIGHT_POS  = ((8, 11), (8, 47), (8, 83), (8, 119), (8,
 RENDER_IN_GAME_TILE_ICON_SIZE = 11
 RENDER_IN_GAME_TILE_ICON_BG_RECT = (275, 0, 11, 11)
 
+RENDER_NUM_STATIONS_PER_ROW = 8
+RENDER_NUM_STATION_ROWS = 2
+RENDER_IN_GAME_STATION_STATUS_STRIP_POS = ((0, 0, 3, 4), \
+										   (3, 0, 3, 4), \
+										   (6, 0, 3, 4))
+
 # Note that these coordinates are relative to the upper left corner of the inside of the player dialog
 # box (and not the screen)!  This is because the player dialog is assembled on a separate surface from
 # the screen, and blitted in one shot only when it changes.										
 RENDER_IN_GAME_PLAYER_AVATAR_BOX_POS = ((1, 3), (1, 39), (1, 75), (1, 111), (1, 147), (1, 183))
 RENDER_IN_GAME_PLAYER_AVATAR_POS     = ((2, 4), (2, 40), (2, 76), (2, 112), (2, 148), (2, 184))
-RENDER_IN_GAME_PLAYER_NAME_POS = ((21, 4), (21, 40), (21, 76), (21, 112), (21, 148), (21, 184))
-RENDER_IN_GAME_PLAYER_SCORE_TEXT_POS = ((21, 13), (21, 49), (21, 85), (21, 121), (21, 157), (21, 193))
-RENDER_IN_GAME_PLAYER_SCORE_POS = ((49, 13), (49, 49), (49, 85), (49, 121), (49, 157), (49, 193))
+RENDER_IN_GAME_PLAYER_NAME_POS = ((21, 3), (21, 39), (21, 75), (21, 111), (21, 147), (21, 183))
+RENDER_IN_GAME_PLAYER_SCORE_TEXT_POS = ((21, 12), (21, 48), (21, 84), (21, 120), (21, 156), (21, 192))
+RENDER_IN_GAME_PLAYER_SCORE_POS = ((49, 12), (49, 48), (49, 84), (49, 120), (49, 156), (49, 192))
 RENDER_IN_GAME_PLAYER_STATION_TILE_BOX_POS = ((2, 23), (2, 59), (2, 95), (2, 131), (2, 167), (2, 203))
 RENDER_IN_GAME_PLAYER_HELD_PRIMARY_POS = ((39, 24), (39, 60), (39, 96), (39, 132), (39, 168), (39, 204))
 RENDER_IN_GAME_PLAYER_HELD_SECONDARY_POS = ((55, 24), (55, 60), (55, 96), (55, 132), (55, 168), (55, 204))

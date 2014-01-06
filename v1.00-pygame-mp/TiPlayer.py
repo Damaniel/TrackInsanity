@@ -58,3 +58,10 @@ class Player:
 		# The avatar ID for this player.
 		self.avatarId = 0
 		
+		if self.controlledBy == self.HUMAN:
+			self.playerName = 'Human'
+		elif self.controlledBy == self.COMPUTER:
+			self.playerName = 'Computer'
+		else:
+			self.playerName = 'None'
+			
